@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Signup</title>
+  <script src="../../Backend/student_helper.js"></script>
+  <script src="../../Backend/one_time thing.js"></script>
+  <script src="../../Backend/validation.js"></script>
+  <script src="../../Backend/Voice_feature.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .container {
+      background: linear-gradient(135deg, #ffffff, #f8f8f8);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 460px;
+      box-sizing: border-box;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #fff;
+      transition: border 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff7e5f;
+      box-shadow: 0 0 0 2px rgba(255, 126, 95, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #feb47b, #ff7e5f);
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Student Signup</h2>
+    <form id="signupForm">
+      <input type="text" name="first_name" placeholder="First Name" required>
+      <input type="text" name="middle_name" placeholder="Middle Name">
+      <input type="text" name="last_name" placeholder="Last Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="phone" placeholder="Phone Number" required>
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+  
+      const form = e.target;
+      const data = {
+        first_name: form.first_name.value.trim(),
+        middle_name: form.middle_name.value.trim(),
+        last_name: form.last_name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim()
+      };
+  
+      if (!data.first_name || !data.last_name || !data.email || !data.phone) {
+        alert("Invalid input! Please fill all required fields.");
+        return;
+      }
+  
+      if (isDuplicateSignup(data.email, data.phone)) {
+        alert("Warning: Duplicate signup detected (email or phone already exists)!");
+        return;
+      }
+  
+      // Save and redirect
+      saveStudentData(data);
+      localStorage.setItem("signupData", JSON.stringify(data));
+      alert("Signup successful! Proceeding to profile update.");
+      window.location.href = "profile_update.html";
+    });
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+    
+      const form = e.target;
+      const data = {
+        first_name: form.first_name.value.trim(),
+        middle_name: form.middle_name.value.trim(),
+        last_name: form.last_name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim()
+      };
+    
+      const response = await fetch("/api/student/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+    
+      if (response.ok) {
+        localStorage.setItem("signupData", JSON.stringify(data));
+        alert("Signup successful! Proceeding to profile update.");
+        window.location.href = "/profile_update";
+      } else {
+        alert("Signup failed!");
+      }
+    });    
+    
+  </script>
+  
+
+</body>
+</html>

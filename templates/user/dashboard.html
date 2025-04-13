@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <script src="../../Backend/student_helper.js"></script>
+  <script src="../../Backend/Voice_feature.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(43, 88, 118, 0.8), rgba(78, 67, 118, 0.8)),
+        url(../../Design/7f243a3a-1c11-4821-903e-21a266db0fcb.png) no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #1f2833;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 3px 0 10px rgba(0,0,0,0.3);
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      padding: 20px 0;
+      font-weight: 600;
+      background-color: #0b0c10;
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .sidebar a {
+      color: white;
+      padding: 15px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #45a29e;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropbtn {
+      padding: 15px 20px;
+      background: none;
+      color: white;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .dropdown-content {
+      display: none;
+      flex-direction: column;
+      background-color: #1f2833;
+      border-left: 3px solid #66fcf1;
+    }
+
+    .dropdown-content a {
+      padding: 12px 30px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #45a29e;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: flex;
+    }
+
+    .logout {
+      background: crimson;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .logout a {
+      color: white;
+      display: block;
+      padding: 15px;
+      text-decoration: none;
+    }
+
+    .logout a:hover {
+      background-color: darkred;
+    }
+
+    .content {
+      margin-left: 250px;
+      padding: 40px;
+      width: calc(100% - 250px);
+    }
+
+    .profile-pic {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .profile-pic img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      object-fit: cover;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .welcome h1 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    .notice-board {
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #111;
+      padding: 25px;
+      border-radius: 12px;
+      max-height: 500px;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .notice-board h2 {
+      margin-top: 0;
+      color: #1f2833;
+      border-bottom: 2px solid #45a29e;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .notice-item {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .notice-item:last-child {
+      border-bottom: none;
+    }
+
+    .notice-item input {
+      padding: 6px;
+      margin-top: 8px;
+      width: 70%;
+    }
+
+    .notice-item button {
+      padding: 6px 12px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    #notice-search {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <h3>Student Menu</h3>
+      <a href="./dashboard.html">Home</a>
+      <a href="../user/profile.html">Profile</a>
+      <div class="dropdown">
+        <button class="dropbtn">Academics</button>
+        <div class="dropdown-content">
+          <a href="./course_registration.html">Course Registration</a>
+          <a href="./results.html">Results</a>
+        </div>
+      </div>
+    </div>
+    <div class="logout">
+      <a href="login.html">Logout</a>
+    </div>
+  </div>
+
+  <div class="profile-pic">
+    <img src="https://via.placeholder.com/60" id="dashboardProfilePic" alt="Profile Picture">
+  </div>
+
+  <div class="content">
+    <div class="welcome">
+      <h1 id="greeting">Welcome to Your Dashboard</h1>
+    </div>
+
+    <div class="notice-board">
+      <h2> Notice Board</h2>
+      <div id="notices">
+        <p>Loading notices...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user") || "{}") || {};
+    if (!user || !user.matric) {
+      alert("Access denied. Please login first.");
+      window.location.href = "login.html";
+    }
+    if (user && user.fullname && user.department) {
+      document.getElementById("greeting").innerText =
+        `Welcome, ${user.fullname} from ${user.department.toUpperCase()} Department!`;
+    }
+  
+    if (user && user.profilePic) {
+      document.getElementById("dashboardProfilePic").src = user.profilePic;
+    }
+  
+    function markAsRead(index) {
+      localStorage.setItem(`notice_read_${index}`, 'true');
+      alert(`Notice ${index + 1} marked as read.`);
+    }
+  
+    function submitReply(index) {
+      const input = document.getElementById(`reply-${index}`);
+      const reply = input.value.trim();
+      if (!reply) {
+        alert("Please enter a reply.");
+        return;
+      }
+      alert(`Your reply: "${reply}" has been sent.`);
+      input.value = '';
+    }
+  
+    // Fetch department-specific notices from backend
+    fetch(`http://127.0.0.1:5000/api/notice/get?department=${user.department}`)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("notices");
+        if (data.length > 0) {
+          container.innerHTML = "";
+          data.forEach((notice, index) => {
+            const div = document.createElement("div");
+            div.className = "notice-item";
+  
+            if (localStorage.getItem(`notice_read_${index}`)) {
+              div.style.opacity = 0.6;
+            }
+  
+            div.innerHTML = `
+              <strong>${index + 1}. ${notice.title}</strong><br>
+              <p>${notice.body}</p>
+              ${notice.attachment ? `<p> Attachment: <a href="../../uploads/${notice.attachment}" target="_blank">${notice.attachment}</a></p>` : ''}
+              <button onclick="markAsRead(${index})">Mark as Read</button>
+              <div>
+                <input type="text" id="reply-${index}" placeholder="Reply (optional)">
+                <button onclick="submitReply(${index})">📨 Send</button>
+              </div>
+            `;
+            container.appendChild(div);
+          });
+        } else {
+          container.innerHTML = '<p>No notices available for your department.</p>';
+        }
+      });
+  </script>
+  
+  
+</body>
+</html>

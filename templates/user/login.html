@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Login</title>
+  <script src="../../Backend/student_helper.js"></script>
+  <script src="../../Backend/Voice_feature.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+      background-image: url('../../Design/login-bg.png');
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .container {
+      background: linear-gradient(135deg, #ffffff, #f9f9f9);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 460px;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #fff;
+      transition: border 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #cc2b5e;
+      box-shadow: 0 0 0 2px rgba(204, 43, 94, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #cc2b5e, #753a88);
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #753a88, #cc2b5e);
+      transform: scale(1.02);
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: #cc2b5e;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Student Login</h2>
+    <form id="loginForm">
+      <input type="text" id="matric" placeholder="Matric Number" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="link">
+      Don't have an account? <a href="signup.html">Apply</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+    
+      const inputMatric = document.getElementById("matric").value.trim().toUpperCase();
+      const inputPassword = document.getElementById("password").value;
+    
+      const res = await fetch("http://127.0.0.1:5000/api/login/student", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matric: inputMatric, password: inputPassword })
+      });
+    
+      const data = await res.json();
+    
+      if (res.ok) {
+        localStorage.setItem("user", JSON.stringify(data));
+        alert("Login successful!");
+        window.location.href = "dashboard.html";
+      } else {
+        alert(data.error || "Login failed.");
+      }
+    });
+    
+  </script>
+  
+
+</body>
+</html>
+
+
+
+

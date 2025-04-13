@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Course Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="../../Backend/student_helper.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <script src="../../Backend/Voice_feature.js"></script>
+
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      padding: 40px 20px;
+      margin: 0;
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 20px 0;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .back-link:hover {
+      background-color: rgb(214, 124, 7);
+      transform: scale(1.05);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .proceed-btn, button {
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .proceed-btn:hover, button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .courses {
+      transition: all 0.3s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+    
+      th, td {
+        font-size: 14px;
+      }
+    
+      .proceed-btn, button {
+        font-size: 15px;
+      }
+    
+      select {
+        font-size: 14px;
+      }
+    
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+      }
+    
+      table thead, table tbody, table tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    
+      table th, table td {
+        word-wrap: break-word;
+        white-space: normal;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+<a href="dashboard.html" class="back-link">&larr; Back</a>
+
+<div class="container">
+  <h2>Course Registration</h2>
+  <div id="userInfo"></div>
+
+  <label for="semesterSelect"><strong>Select Semester:</strong></label>
+  <select id="semesterSelect">
+    <option value="first">First Semester</option>
+    <option value="second">Second Semester</option>
+  </select>
+
+  <button class="proceed-btn" onclick="downloadCourses()">Download Registered Courses</button>
+
+  <div class="courses" id="courseList"></div>
+</div>
+
+<script>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.matric) {
+      alert("Access denied. Please login first.");
+      window.location.href = "login.html";
+    }    
+  function capitalizeWords(str) {
+    return str.replace(/\b[a-z]/g, char => char.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2');
+  }
+
+  function generateSelectableCourseList(data) {
+    return `<table>
+      <tr><th>Select</th><th>Code</th><th>Title</th><th>Unit</th></tr>
+      ${data.map((c, i) => `
+        <tr>
+          <td><input type="checkbox" class="courseCheckbox" data-index="${i}" checked></td>
+          <td>${c.code}</td>
+          <td>${c.title}</td>
+          <td>${c.unit}</td>
+        </tr>
+      `).join("")}
+    </table>
+    <label style="display:block; margin-top:15px;">
+      <input type="checkbox" id="confirmLock"> I confirm these courses are final
+    </label>
+    <button class="proceed-btn" onclick="lockCourses()">Submit & Lock Courses</button>
+    <p id="lockMessage" style="color: red; font-weight: bold;"></p>`;
+  }
+
+  function generateCourseTable(data) {
+    return `<table>
+      <tr><th>#</th><th>Code</th><th>Title</th><th>Unit</th></tr>
+      ${data.map((c, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${c.code}</td>
+          <td>${c.title}</td>
+          <td>${c.unit}</td>
+        </tr>`).join("")}
+    </table>`;
+  }
+  async function showCourses() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const semester = document.getElementById("semesterSelect").value;
+    const courseList = document.getElementById("courseList");
+    courseList.innerHTML = "";
+  
+    if (!user || !user.department || !user.level) {
+      courseList.innerHTML = "<p>User department or level not found.</p>";
+      return;
+    }
+  
+    const response = await fetch(`http://127.0.0.1:5000/api/course/get?department=${user.department}&level=${user.level}&semester=${semester}`);
+    const data = await response.json();
+  
+    const lockKey = `${user.department.toLowerCase()}_${user.level}_${semester}_locked`;
+    const regKey = `${user.department.toLowerCase()}_${user.level}_${semester}_registered`;
+  
+    document.getElementById("userInfo").innerHTML = `
+      <p><strong>Name:</strong> ${user.fullname.toUpperCase()}</p>
+      <p><strong>Matric Number:</strong> ${user.matric}</p>
+      <p><strong>Department:</strong> ${user.department.toUpperCase()}</p>
+      <p><strong>Level:</strong> ${user.level}</p>
+      <p><strong>Semester:</strong> ${semester.toUpperCase()}</p>
+    `;
+  
+    if (data && data.length > 0) {
+      if (localStorage.getItem(lockKey) === "true") {
+        const registered = JSON.parse(localStorage.getItem(regKey) || "[]");
+        courseList.innerHTML = generateCourseTable(registered) +
+          `<p id="lockMessage" style="color: green; font-weight: bold;">Courses are locked and cannot be changed.</p>`;
+        return;
+      }
+      courseList.innerHTML = generateSelectableCourseList(data);
+    } else {
+      courseList.innerHTML = "<p>No courses found for this semester.</p>";
+    }
+  }
+  
+
+  function lockCourses() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const semester = document.getElementById("semesterSelect").value;
+    const confirm = document.getElementById("confirmLock").checked;
+    const message = document.getElementById("lockMessage");
+
+    const key = `${user.department.toLowerCase()}_${user.level}_${semester}_courses`;
+    const allCourses = JSON.parse(localStorage.getItem(key));
+    const selected = [];
+
+    document.querySelectorAll(".courseCheckbox").forEach(cb => {
+      if (cb.checked) {
+        const index = parseInt(cb.dataset.index);
+        selected.push(allCourses[index]);
+      }
+    });
+
+    if (!confirm) {
+      message.textContent = "Please confirm before submitting!";
+      return;
+    }
+
+    if (selected.length === 0) {
+      message.textContent = "Please select at least one course!";
+      return;
+    }
+
+    const lockKey = `${user.department.toLowerCase()}_${user.level}_${semester}_locked`;
+    localStorage.setItem(lockKey, "true");
+    const courseSaveKey = `${user.department.toLowerCase()}_${user.level}_${semester}_registered`;
+    localStorage.setItem(courseSaveKey, JSON.stringify(selected));
+    
+
+    message.textContent = "Courses locked and saved successfully.";
+    message.style.color = "green";
+
+    showCourses(); // Refresh view to locked mode
+  }
+
+  async function downloadCourses() {
+    const userData = localStorage.getItem("user");
+    if (!userData) {
+      alert("User not found!");
+      return;
+    }
+  
+    const user = JSON.parse(userData);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+  
+    if (!doc.autoTable) {
+      alert("jsPDF autoTable plugin is missing!");
+      return;
+    }
+  
+    const capitalizeWords = str =>
+      str.replace(/\b[a-z]/g, char => char.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2');
+  
+    const semesters = ["first", "second"];
+    doc.setFontSize(16);
+    doc.text("Course Registration Summary", 20, 20);
+    let y = 30;
+  
+    doc.setFontSize(12);
+    doc.text(`Name: ${user.fullname}`, 20, y); y += 8;
+    doc.text(`Matric No: ${user.matric}`, 20, y); y += 8;
+    doc.text(`Department: ${capitalizeWords(user.department)}`, 20, y); y += 8;
+    doc.text(`Level: ${user.level}`, 20, y); y += 12;
+  
+    semesters.forEach(semester => {
+      const regKey = `${user.department.toLowerCase()}_${user.level}_${semester}_registered`;
+      const courses = JSON.parse(localStorage.getItem(regKey)) || [];
+  
+      if (courses.length === 0) return;
+  
+      doc.setFontSize(13);
+      doc.text(`${capitalizeWords(semester)} Semester`, 20, y); y += 6;
+  
+      const headers = [["S/N", "Code", "Title", "Unit"]];
+      const rows = courses.map((c, i) => [i + 1, c.code, c.title, c.unit]);
+      const totalUnits = courses.reduce((sum, course) => sum + Number(course.unit), 0);
+      rows.push(["", "", "Total Units", totalUnits]);
+  
+      doc.autoTable({
+        startY: y,
+        head: headers,
+        body: rows,
+        theme: 'striped',
+        styles: { fontSize: 10, cellPadding: 4 },
+        headStyles: { fillColor: [0, 123, 255], textColor: [255, 255, 255] },
+        columnStyles: { 3: { halign: 'right' } },
+        margin: { top: 10 }
+      });
+  
+      if (doc.previousAutoTable) {
+        y = doc.previousAutoTable.finalY + 10;
+      }
+    });
+  
+    doc.save("Course_Registration_Details.pdf");
+  }
+  
+
+  
+  
+  window.addEventListener("DOMContentLoaded", showCourses);
+  document.getElementById("semesterSelect").addEventListener("change", showCourses);
+</script>
+
+</body>
+</html>

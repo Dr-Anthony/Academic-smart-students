@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Update Profile</title>
+  <script src="../../Backend/student_helper.js"></script>
+  <script src="../../Backend/Voice_feature.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: linear-gradient(to bottom right, #ffffff, #f7f9fc);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    input[readonly] {
+      background-color: #f1f1f1;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background 0.3s;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .row > div {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      h2 { font-size: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 15px; border-radius: 12px; }
+      button { padding: 10px; font-size: 0.95rem; }
+      input, select, textarea { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <form class="container" id="profileForm">
+    <h2>Update Profile</h2>
+    <label>Full Name</label>
+    <input type="text" id="fullname" readonly />
+
+    <label>Password</label>
+    <input type="password" id="password" required />
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob" required />
+
+    <label>Gender</label>
+    <select id="gender" required>
+      <option value="" disabled selected>Select gender</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+
+    <label>Nationality</label>
+    <input type="text" id="nationality" required />
+
+    <label>State of Origin</label>
+    <input type="text" id="state" />
+
+    <label>Profile Picture (Required)</label>
+    <input type="file" id="profilePic" accept="image/*" required />
+
+    <label>Department</label>
+    <select id="department" required>
+      <option value="">--Select Department--</option>
+      <option value="accounting">Accounting</option>
+      <option value="biochemistry">Biochemistry</option>
+      <option value="banking and finance">Banking and Finance</option>
+      <option value="biological science">Biological Science</option>
+      <option value="nursing">Nursing</option>
+      <option value="philosophy">Philosophy</option>
+      <option value="business administration">Business Administration</option>
+      <option value="theology">Theology</option>
+      <option value="computer engineering">Computer Engineering</option>
+      <option value="pure and applied chemistry">Pure and Applied Chemistry</option>
+      <option value="computer science">Computer Science</option>
+      <option value="economics">Economics</option>
+      <option value="electrical and electronic engineering">Electrical and Electronic Engineering</option>
+      <option value="english and literary studies">English and Literary Studies</option>
+      <option value="entrepreneurship">Entrepreneurship</option>
+      <option value="physics">Physics</option>
+      <option value="guidance and counseling">Guidance and Counseling</option>
+      <option value="history and international relations">History and International Relations</option>
+      <option value="law">Law</option>
+      <option value="medicine and surgery">Medicine and Surgery</option>
+      <option value="medical laboratory science">Medical Laboratory Science</option>
+      <option value="mass communication">Mass Communication</option>
+      <option value="applied microbiology">Applied Microbiology</option>
+      <option value="marketing">Marketing</option>
+      <option value="peace and conflict studies">Peace and Conflict Studies</option>
+      <option value="pharmacy">Pharmacy</option>
+      <option value="political science and diplomacy">Political Science and Diplomacy</option>
+      <option value="publica dministration">Public Administration</option>
+      <option value="software engineering">Software Engineering</option>
+    </select>
+
+    <label>Year of Entry</label>
+    <input type="text" id="year" placeholder="e.g. 2022" required />
+
+    <label>Level</label>
+    <input type="text" id="level" placeholder="e.g. 100, 200" />
+
+    <label>Father's Details</label>
+    <div class="row">
+      <div><input type="text" id="father_name" placeholder="Father's Name" /></div>
+      <div><input type="tel" id="father_phone" placeholder="Father's Phone Number" /></div>
+    </div>
+
+    <label>Mother's Details</label>
+    <div class="row">
+      <div><input type="text" id="mother_name" placeholder="Mother's Name" /></div>
+      <div><input type="tel" id="mother_phone" placeholder="Mother's Phone Number" /></div>
+    </div>
+
+    <button type="submit">Update Profile</button>
+    
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Get signup data and autofill full name
+      const signupData = JSON.parse(localStorage.getItem("signupData") || "{}");
+      const fullName = `${signupData.last_name} ${signupData.middle_name || ""} ${signupData.first_name}`.trim();
+      document.getElementById("fullname").value = fullName;
+  
+      const dept = document.getElementById("department");
+      const year = document.getElementById("year");
+  
+      // Generate matric on department or year change
+      dept.addEventListener("change", async () => {
+        if (dept.value && year.value) await generateMatric(dept.value, year.value);
+      });
+  
+      year.addEventListener("blur", async () => {
+        if (dept.value && year.value) await generateMatric(dept.value, year.value);
+      });
+  
+      async function generateMatric(department, year) {
+        try {
+          const res = await fetch("http://127.0.0.1:5000/api/id/matric", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ department, year })
+          });
+          const data = await res.json();
+          localStorage.setItem("generated_matric", data.matric);
+        } catch (error) {
+          alert("Failed to generate matric number.");
+          console.error(error);
+        }
+      }
+    });
+  
+    document.getElementById("profileForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+  
+      const matric = localStorage.getItem("generated_matric");
+      const file = document.getElementById("profilePic").files[0];
+  
+      if (!file || !matric) {
+        alert("Missing profile picture or generated matric.");
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = async function (event) {
+        const profile = {
+          fullname: document.getElementById("fullname").value,
+          password: document.getElementById("password").value,
+          dob: document.getElementById("dob").value,
+          gender: document.getElementById("gender").value,
+          nationality: document.getElementById("nationality").value,
+          state: document.getElementById("state").value,
+          department: document.getElementById("department").value,
+          year: document.getElementById("year").value,
+          level: document.getElementById("level").value,
+          father_name: document.getElementById("father_name").value,
+          father_phone: document.getElementById("father_phone").value,
+          mother_name: document.getElementById("mother_name").value,
+          mother_phone: document.getElementById("mother_phone").value,
+          profilePic: event.target.result,
+          matric: matric
+        };
+  
+        // Check for duplicates
+        let allStudents = JSON.parse(localStorage.getItem("students")) || [];
+        const duplicate = allStudents.find(s => s.fullname === profile.fullname && s.dob === profile.dob);
+  
+        if (duplicate) {
+          alert("A profile with this full name already exists. Please avoid duplicate registration.");
+          return;
+        }
+  
+        try {
+          // Save to backend
+          const response = await fetch(`http://127.0.0.1:5000/api/student/${matric}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(profile)
+          });
+  
+          if (response.ok) {
+            // Save locally too
+            allStudents.push(profile);
+            const allStudentsString = JSON.stringify(allStudents);
+            localStorage.setItem("students", allStudentsString);
+            localStorage.setItem("students_backup", allStudentsString);
+            localStorage.setItem("user", JSON.stringify(profile));
+  
+            alert(`Profile saved!\nMatric No: ${matric}`);
+            window.location.href = "login.html";
+          } else {
+            alert("Profile update failed.");
+          }
+        } catch (error) {
+          alert("An error occurred while saving profile.");
+          console.error(error);
+        }
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Notice</title>
+  <script src="../../Backend/student_helper.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, rgba(33, 147, 176, 0.8), rgba(109, 213, 237, 0.8)),
+                  url("../../Design/ChatGPT%20Image%20Apr%208%2C%202025%2C%2007_32_35%20AM.png") center/cover no-repeat;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      color: #fff;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      text-align: left;
+    }
+
+    textarea, select, input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px 5px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 20px;
+      font-weight: bold;
+      color: #ffffff;
+      text-decoration: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    .back-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .preview {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px dashed #fff;
+      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-align: left;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 25px;
+      }
+      .btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    
+    .notice-card {
+      animation: bounceIn 0.5s ease-in-out;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 4px solid #38f9d7;
+      transition: background 0.3s, transform 0.3s;
+    }
+    
+    .notice-card:hover {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.2), rgba(56, 249, 215, 0.2));
+      transform: scale(1.02);
+    }
+    
+    .notice-card button {
+      background: linear-gradient(135deg, crimson, orangered);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 8px 14px;
+      margin-top: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.4s ease;
+    }
+    
+    .notice-card button:hover {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      box-shadow: 0 0 10px rgba(255, 105, 105, 0.5);
+    }
+    
+  </style>
+</head>
+<body>
+  <a href="admin_dashboard.html" class="back-link">&larr; Back</a>
+
+  <div class="container" id="mainContainer">
+    <h2>Post a New Notice</h2>
+    <form id="noticeForm">
+      <div class="form-section">
+        <label for="priority">Select Priority</label>
+        <select id="priority" name="priority" required>
+          <option value="all">Notice to All</option>
+          <option value="department">Dear Students of:</option>
+          <option value="holiday">Holiday Notice</option>
+        </select>
+      </div>
+
+      <div class="form-section" id="dept-section" style="display: none;">
+        <label for="department">Select Department</label>
+        <select id="department" name="department">
+          <option value="">--Select Department--</option>
+          <option value="accounting">Accounting</option>
+          <option value="biochemistry">Biochemistry</option>
+          <option value="banking and finance">Banking and Finance</option>
+          <option value="biological science">Biological Science</option>
+          <option value="nursing">Nursing</option>
+          <option value="philosophy">Philosophy</option>
+          <option value="business administration">Business Administration</option>
+          <option value="theology">Theology</option>
+          <option value="computer engineering">Computer Engineering</option>
+          <option value="pure and applied chemistry">Pure and Applied Chemistry</option>
+          <option value="computer science">Computer Science</option>
+          <option value="economics">Economics</option>
+          <option value="electrical and electronic engineering">Electrical and Electronic Engineering</option>
+          <option value="english and literary studies">English and Literary Studies</option>
+          <option value="entrepreneurship">Entrepreneurship</option>
+          <option value="physics">Physics</option>
+          <option value="guidance and counseling">Guidance and Counseling</option>
+          <option value="history and international relations">History and International Relations</option>
+          <option value="law">Law</option>
+          <option value="medicine and surgery">Medicine and Surgery</option>
+          <option value="medical laboratory science">Medical Laboratory Science</option>
+          <option value="mass communication">Mass Communication</option>
+          <option value="applied microbiology">Applied Microbiology</option>
+          <option value="marketing">Marketing</option>
+          <option value="peace and conflict studies">Peace and Conflict Studies</option>
+          <option value="pharmacy">Pharmacy</option>
+          <option value="political science and diplomacy">Political Science and Diplomacy</option>
+          <option value="public administration">Public Administration</option>
+          <option value="software engineering">Software Engineering</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label for="notice">Write Notice (Max 500 characters)</label>
+        <textarea id="notice" name="notice" maxlength="500" required></textarea>
+      </div>
+
+      <div class="form-section">
+        <label for="attachment">Attach File (optional)</label>
+        <input type="file" id="attachment" accept=".pdf,.doc,.jpg,.png" />
+      </div>
+
+      <button type="button" class="btn" onclick="previewNotice()">Post</button>
+    </form>
+
+    <div id="previewArea" class="preview" style="display: none;">
+      <h3>Preview:</h3>
+      <p id="previewText"></p>
+      <button class="btn" onclick="editPost()">Edit Notice</button>
+      <button class="btn" onclick="changePriority()">Change Priority</button>
+      <button class="btn" onclick="saveNotice()">Save to Student Dashboard</button>
+    </div>
+
+    <button class="btn" onclick="readScreen()">Read This Page</button>
+  </div>
+  <div class="form-section" style="margin-top: 40px;">
+    <h3> Remove Posted Notices</h3>
+    <div id="noticeListToDelete" style="text-align: left; max-height: 300px; overflow-y: auto; padding: 10px; border: 2px dashed #fff; border-radius: 10px;">
+      <p>Loading posted notices...</p>
+    </div>
+  </div>
+  
+
+  <script>
+    const priority = document.getElementById("priority");
+    const deptSection = document.getElementById("dept-section");
+  
+    // Show department dropdown only when 'department' is selected
+    priority.addEventListener("change", () => {
+      deptSection.style.display = priority.value === "department" ? "block" : "none";
+    });
+  
+    function setReadOnlyState(readOnly) {
+      const inputs = document.querySelectorAll("select, textarea, input[type='file']");
+      inputs.forEach(input => {
+        if (readOnly) {
+          input.setAttribute("disabled", "disabled");
+        } else {
+          input.removeAttribute("disabled");
+        }
+      });
+    }
+  
+    function previewNotice() {
+      const priorityValue = priority.value;
+      const department = document.getElementById("department").value;
+      const noticeText = document.getElementById("notice").value.trim();
+      let finalText = "";
+  
+      if (!noticeText) {
+        alert("Please enter a notice message.");
+        return;
+      }
+  
+      if (priorityValue === "all") {
+        finalText = "NOTICE TO ALL:\n" + noticeText;
+      } else if (priorityValue === "department") {
+        if (!department) {
+          alert("Please select a department.");
+          return;
+        }
+        finalText = `Dear Students of ${department.toUpperCase()}:\n${noticeText}`;
+      } else if (priorityValue === "holiday") {
+        finalText = "HOLIDAY NOTICE:\n" + noticeText;
+      }
+  
+      document.getElementById("previewText").innerHTML = finalText.replace(/\n/g, "<br>");
+      document.getElementById("previewArea").style.display = "block";
+      setReadOnlyState(true);
+    }
+  
+    function editPost() {
+      setReadOnlyState(false);
+      document.getElementById("notice").focus();
+    }
+  
+    function changePriority() {
+      setReadOnlyState(false);
+      document.getElementById("priority").focus();
+    }
+  
+    function saveNotice() {
+      if (!confirm("Are you sure you want to save this notice?")) return;
+  
+      const priorityValue = priority.value;
+      const department = document.getElementById("department").value.trim().toLowerCase().replace(/\s/g, '');
+      const noticeText = document.getElementById("notice").value.trim();
+      const attachment = document.getElementById("attachment").value.split('\\').pop() || null;
+  
+      if (!noticeText) {
+        alert("Notice content cannot be empty.");
+        return;
+      }
+  
+      if (priorityValue === "department" && !department) {
+        alert("Please select a department.");
+        return;
+      }
+  
+      const notice = {
+        department: (priorityValue === "department") ? department : "all",
+        title: 
+          priorityValue === "all" ? "NOTICE TO ALL" :
+          priorityValue === "holiday" ? "HOLIDAY NOTICE" :
+          `Dear Students of ${department.toUpperCase()}`,
+        body: noticeText,
+        attachment,
+        date: new Date().toLocaleString()
+      };
+  
+      const notices = JSON.parse(localStorage.getItem("notices")) || [];
+      notices.unshift(notice);
+      localStorage.setItem("notices", JSON.stringify(notices));
+  
+      alert(" Notice saved to Student Dashboard!");
+      window.location.href = "admin_dashboard.html";
+    }
+    function renderDeleteList() {
+      const all = JSON.parse(localStorage.getItem("notices")) || [];
+      const container = document.getElementById("noticeListToDelete");
+    
+      if (all.length === 0) {
+        container.innerHTML = "<p>No notices to delete.</p>";
+        return;
+      }
+    
+      container.innerHTML = "";
+      all.forEach((notice, index) => {
+        const div = document.createElement("div");
+        div.className = "notice-card";
+    
+        div.innerHTML = `
+          <strong>${notice.title}</strong><br>
+          <small>${notice.date}</small><br>
+          <p>${notice.body}</p>
+          <button onclick="deleteNotice(${index})">🗑️ Delete</button>
+        `;
+    
+        container.appendChild(div);
+      });
+    }
+    
+    
+    function deleteNotice(index) {
+      if (!confirm("Are you sure you want to delete this notice?")) return;
+    
+      const all = JSON.parse(localStorage.getItem("notices")) || [];
+      all.splice(index, 1); // Remove the one at that index
+      localStorage.setItem("notices", JSON.stringify(all));
+      alert(" Notice deleted.");
+      renderDeleteList(); // Re-render list
+    }
+    
+    // Call once on load
+    renderDeleteList();
+      document.getElementById("addNoticeForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+      
+        const title = document.getElementById("title").value.trim();
+        const body = document.getElementById("body").value.trim();
+        const department = document.getElementById("department").value.trim();
+        const attachment = document.getElementById("attachment").value.trim(); // optional
+      
+        if (!title || !body || !department) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+      
+        const response = await fetch("http://127.0.0.1:5000/api/notice/post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, body, department, attachment })
+        });
+      
+        if (response.ok) {
+          alert("Notice posted successfully!");
+          document.getElementById("addNoticeForm").reset();
+        } else {
+          alert("Failed to post notice.");
+        }
+      });
+      
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>STUDENT_DETAILS0</title>
+  <script src="../../Backend/student_helper.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #89f7fe, #66a6ff);
+      margin: 0;
+      padding: 50px 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      background: #fff;
+      margin: auto;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 20px;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+    .back-link:hover {
+      background-color: rgb(214, 124, 7);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .profile-pic {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px solid #007bff;
+      object-fit: cover;
+    }
+
+    .row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .label {
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 5px;
+    }
+
+    .value {
+      color: #333;
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="./admin_dashboard.html" class="back-link">&larr; Back</a>
+
+  <div class="container">
+    <h2>My Profile</h2>
+    <div class="profile-pic">
+      <img src="" alt="Profile Picture" id="profilePic" />
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Full Name</div>
+        <div class="value" id="fullname"></div>
+      </div>
+      <div class="field">
+        <div class="label">Date of Birth</div>
+        <div class="value" id="dob"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Gender</div>
+        <div class="value" id="gender"></div>
+      </div>
+      <div class="field">
+        <div class="label">Nationality</div>
+        <div class="value" id="nationality"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">State of Origin</div>
+        <div class="value" id="state"></div>
+      </div>
+      <div class="field">
+        <div class="label">Department</div>
+        <div class="value" id="department"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Level</div>
+        <div class="value" id="level"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Father's Name</div>
+        <div class="value" id="father_name"></div>
+      </div>
+      <div class="field">
+        <div class="label">Father's Phone</div>
+        <div class="value" id="father_phone"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <div class="label">Mother's Name</div>
+        <div class="value" id="mother_name"></div>
+      </div>
+      <div class="field">
+        <div class="label">Mother's Phone</div>
+        <div class="value" id="mother_phone"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const matric = urlParams.get("matric");
+  
+      const fields = [
+        'fullname', 'dob', 'gender', 'nationality', 'state',
+        'department', 'level', 'father_name', 'father_phone',
+        'mother_name', 'mother_phone'
+      ];
+  
+      let user = null;
+  
+      if (matric) {
+        try {
+          const res = await fetch(`http://127.0.0.1:5000/api/student/${matric}`);
+          if (res.ok) {
+            user = await res.json();
+          } else {
+            alert("Student not found via API. Falling back to local data.");
+          }
+        } catch (err) {
+          console.error("Fetch error:", err);
+          alert("Error fetching from server. Falling back to local data.");
+        }
+      }
+  
+      if (!user) {
+        user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+          alert("No profile data found in localStorage.");
+          return;
+        }
+      }
+  
+      fields.forEach(field => {
+        const elem = document.getElementById(field);
+        if (elem) elem.textContent = user[field] || "N/A";
+      });
+  
+      const profilePic = document.getElementById("profilePic");
+      if (profilePic) profilePic.src = user.profilePic || "https://via.placeholder.com/130";
+    });
+  </script>
+  
+</body>
+</html>

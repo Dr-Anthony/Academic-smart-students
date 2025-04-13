@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="#"></script>
+    <title>Forgotten Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            height: 100vh;
+            background-image: url(../../Design/ChatGPT\ Image\ Apr\ 9\,\ 2025\,\ 02_45_02\ AM.png);
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            color: #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e64a19;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 20px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .attempts-info {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .attempts-info span {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="./admin_login.html" class="back-link">&larr; Back to Dashboard</a>
+
+
+    <div class="container">
+        <h2>Forgot Your Password?</h2>
+        <form id="forgotPasswordForm">
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Send Password Reset Link</button>
+        </form>
+        <p id="error-msg" class="error">Invalid email or unauthorized access. You have 3 tries left.</p>
+        <p id="success-msg" class="success">A password reset link has been sent to your email.</p>
+        <p id="attempts-info" class="attempts-info"></p>
+    </div>
+
+    <script>
+        const adminData = {
+            email: "admin@example.com" // Simulating admin email in admin.json
+        };
+
+        let failedAttempts = 0;
+
+        function checkEmailValidity(email) {
+            return email === adminData.email;
+        }
+
+        function sendResetEmail(email) {
+            // Simulate email sending - in real implementation, you'd send this via backend/server
+            console.log(`Sending password reset link to ${email}`);
+            
+            // Simulate user clicking the reset link by opening the reset page
+            window.open('reset_password.html', '_blank');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const errorMsg = document.getElementById("error-msg");
+            const successMsg = document.getElementById("success-msg");
+            const attemptsInfo = document.getElementById("attempts-info");
+
+            if (failedAttempts >= 3) {
+                errorMsg.textContent = "Your IP has been blocked for unauthorized access.";
+                errorMsg.style.display = "block";
+                successMsg.style.display = "none";
+                attemptsInfo.textContent = "";
+                return;
+            }
+
+            if (checkEmailValidity(email)) {
+                sendResetEmail(email);
+
+                successMsg.textContent = "A password reset link has been sent to your email.";
+                successMsg.style.display = "block";
+                errorMsg.style.display = "none";
+                attemptsInfo.textContent = "";
+                failedAttempts = 0;
+            } else {
+                failedAttempts++;
+                errorMsg.textContent = "Invalid email or unauthorized access.";
+                errorMsg.style.display = "block";
+                successMsg.style.display = "none";
+                attemptsInfo.innerHTML = `You have <span>${3 - failedAttempts}</span> tries left.`;
+            }
+        }
+
+        document.getElementById("forgotPasswordForm").addEventListener("submit", handleFormSubmit);
+    </script>
+
+</body>
+</html>

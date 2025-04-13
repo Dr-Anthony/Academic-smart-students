@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Department Students</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+      background: #f0f4f8;
+    }
+    h2 {
+      text-align: center;
+    }
+    .department-section {
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 900px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h2>Preview of All Students by Department</h2>
+  <div id="allDepartmentsContainer"></div>
+
+  <script src="department_sort_helper.js"></script>
+  <script>
+    const container = document.getElementById("allDepartmentsContainer");
+    const departments = DepartmentHelper.getAllDepartments();
+
+    if (departments.length === 0) {
+      container.innerHTML = "<p>No departments found in storage.</p>";
+    } else {
+      departments.forEach(dept => {
+        const section = document.createElement("div");
+        section.className = "department-section";
+        section.innerHTML = `<h3>${dept.toUpperCase()}</h3><div id="${dept}_container"></div>`;
+        container.appendChild(section);
+        DepartmentHelper.previewDepartmentStudents(dept, `${dept}_container`);
+      });
+    }
+  </script>
+</body>
+</html>

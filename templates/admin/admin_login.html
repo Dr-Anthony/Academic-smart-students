@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="../../Backend/voice.js"></script>
+  <title>Admin Login</title>
+  <style>
+   
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(to right, rgba(0, 204, 255, 0.7), rgba(0, 0, 0, 0.7)),
+              url('../../Design/ChatGPT Image Apr 9, 2025, 02_52_07 AM.png') no-repeat center center / cover;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 40px 35px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #fff;
+}
+
+.login-container h2 {
+  font-size: 2.5em;
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.input-wrapper {
+  position: relative;
+  margin: 10px 0;
+}
+
+input {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: #ddd;
+}
+
+input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 2px #ff5722;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.9em;
+  cursor: pointer;
+  padding: 0;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: #ff5722;
+  color: white;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #e64a19;
+}
+
+.login-container p {
+  margin-top: 20px;
+  font-size: 0.95em;
+  color: #eee;
+}
+
+.login-container p a {
+  color: #ffab91;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-container p a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .login-container h2 {
+    font-size: 2rem;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Admin Login</h2>
+    <form id="loginForm" action="#" method="post">
+      <div class="input-wrapper">
+        <input type="text" id="staffId" name="staffId" placeholder="Staff ID" required onmouseover="speakText(this)">
+      </div>
+
+      <div class="input-wrapper">
+        <input type="password" id="password" name="password" placeholder="Password" required onmouseover="speakText(this)">
+        <button type="button" class="toggle-password" onclick="togglePassword()" onmouseover="speakText(this)">👁️</button>
+      </div>
+
+      <button type="submit" onmouseover="speakText(this)">Log In</button>
+    </form>
+    <p>Forgot your password? <a href="admin_forgot.html" onmouseover="speakText(this)">Reset here</a></p>
+  </div>
+  <script>
+    // Toggle password visibility
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+    }
+  
+    // Handle login submission
+    window.onload = function () {
+      const loginForm = document.getElementById("loginForm");
+  
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+  
+        const staffId = document.getElementById("staffId").value.trim();
+        const password = document.getElementById("password").value.trim();
+  
+        const storedStaffId = localStorage.getItem("staffId");
+        const storedPassword = localStorage.getItem("password");
+  
+        if (staffId === storedStaffId && password === storedPassword) {
+          window.location.href = "admin_dashboard.html"; // Redirect on success
+        } else {
+          alert("Invalid credentials. Please try again.");
+        }
+      });
+    };
+  </script>
+  
+</body>
+</html>

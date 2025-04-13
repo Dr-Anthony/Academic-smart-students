@@ -1,0 +1,186 @@
+/* ===== GLOBAL RESET ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation: stars 100s linear infinite;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+/* ===== HEADER & NAV ===== */
+header {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  padding: 20px 40px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: background 0.3s;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== MAIN CONTENT ===== */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  padding: 60px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+main > div, main > section {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(18px);
+  border-radius: 30px;
+  padding: 50px 35px;
+  width: 380px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: floatIn 1.2s ease forwards;
+  position: relative;
+}
+
+main > div:hover, main > section:hover {
+  transform: scale(1.06) rotateZ(1deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+main > div::after, main > section::after {
+  content: "";
+  position: absolute;
+  top: -5px; left: -5px;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  border-radius: 30px;
+  background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffff, #ffcc00, #ff00cc);
+  background-size: 300% 300%;
+  z-index: -1;
+  animation: glow 6s ease infinite;
+  filter: blur(20px);
+  opacity: 0.3;
+}
+
+/* ===== TITLE (OPTIONAL) ===== */
+h1.title {
+  font-size: 2.7rem;
+  color: white;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  animation: fadeInDown 1s ease forwards;
+  z-index: 2;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  width: 100%;
+  z-index: 1;
+}
+
+/* ===== BUTTONS ===== */
+main a {
+  display: inline-block;
+  margin: 8px 6px;
+  padding: 12px 24px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  background: linear-gradient(135deg, #f12711, #f5af19);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.3s, background 0.5s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+main a:hover {
+  transform: scale(1.05) translateY(-2px);
+  background: linear-gradient(135deg, #f5af19, #f12711);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes floatIn {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes glow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes stars {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 1000px; }
+}
+
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  main > div, main > section {
+    width: 90%;
+  }
+}

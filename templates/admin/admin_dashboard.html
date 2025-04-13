@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../../Backend/student_helper.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(43, 88, 118, 0.8), rgba(78, 67, 118, 0.8)),
+        url(../../Design/7f243a3a-1c11-4821-903e-21a266db0fcb.png) no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+    .profile-container {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #ffffff88;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s ease;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .profile-container:hover { transform: scale(1.05); }
+    .profile-pic { width: 100%; height: 100%; object-fit: cover; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1000px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: 0.3s ease;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    nav ul li a:hover {
+      background-color: #ffffff22;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    main {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1000px;
+      border-radius: 20px;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    main h2 { font-size: 1.8rem; margin-bottom: 10px; }
+
+    footer {
+      position: relative;
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      color: white;
+      margin-top: auto;
+    }
+
+    .logout-link {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #e74c3c;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .logout-link:hover {
+      background-color: #c0392b;
+      transform: scale(1.05);
+    }
+
+    .flying-profile {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      transition: all 0.8s ease;
+      z-index: 9999;
+    }
+
+    .profile-expanded {
+      width: 300px !important;
+      height: 380px !important;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      padding: 20px;
+      color: #333;
+    }
+
+    .profile-expanded img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+
+    .profile-expanded p {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { flex-direction: column; gap: 15px; }
+      .logout-link { position: static; margin-top: 15px; display: inline-block; }
+      .profile-container { top: 10px; right: 15px; width: 50px; height: 50px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="profile-container" onclick="animateProfile()">
+      <img src="../../Design/IMG-20231212-WA0040.jpg" alt="Profile Picture" class="profile-pic" />
+    </div>
+    <h1>Welcome to Admin Dashboard</h1>
+    <p>Manage school data and user operations</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="./search.html">Students</a></li>
+      <li><a href="../Department_preview.html">Preview Department</a></li>
+      <li><a href="../admin/add_notice.html">Add Notice</a></li>
+      <li><a href="./manage_course_registration.html">Course Registration</a></li>
+      <li><a href="./manage_results.html">Manage Results</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section>
+      <h2>Dashboard Overview</h2>
+      <p>Select any option from the navigation menu to manage respective operations efficiently.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; Anthony Okoye 2025. </p>
+    <a href="admin_login.html" class="logout-link" id="logoutBtn">Logout</a>
+  </footer>
+
+  <script>
+      // Add this to define the readScreen function
+    
+      // Optional: speak welcome message when page loads
+      function startVoice(message) {
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    
+      // Trigger welcome voice
+      window.addEventListener('load', () => {
+        startVoice('Welcome to the admin dashboard. Choose an option from the menu.');
+      });
+    
+    let lastActivity = new Date().getTime();
+
+    function resetTimer() {
+      lastActivity = new Date().getTime();
+    }
+
+    window.onload = () => {
+      document.addEventListener('mousemove', resetTimer);
+      document.addEventListener('keydown', resetTimer);
+      document.addEventListener('click', resetTimer);
+
+      setInterval(() => {
+        const now = new Date().getTime();
+        const diff = now - lastActivity;
+
+        if (diff > 30 * 60 * 100 && diff < 60 * 60 * 100) {
+          alert("You’ve been inactive for 30 minutes. You will be logged out in 1 hour.");
+        }
+
+        if (diff >= 60 * 60 * 100) {
+          alert("You have been logged out due to inactivity.");
+          window.location.href = "admin_login.html";
+        }
+      }, 60 * 100);
+    };
+
+    let isProfileOpen = false;
+    let profileClone = null;
+
+    function animateProfile() {
+      const original = document.querySelector('.profile-container');
+
+      if (!isProfileOpen) {
+        const rect = original.getBoundingClientRect();
+        profileClone = original.cloneNode(true);
+        profileClone.classList.add('flying-profile');
+        profileClone.style.top = `${rect.top}px`;
+        profileClone.style.left = `${rect.left}px`;
+        document.body.appendChild(profileClone);
+
+        setTimeout(() => {
+          profileClone.style.top = '50%';
+          profileClone.style.left = '50%';
+          profileClone.style.transform = 'translate(-50%, -50%)';
+        }, 10);
+
+        setTimeout(() => {
+          profileClone.classList.add('profile-expanded');
+          profileClone.innerHTML = `<img src="../../Design/IMG-20231212-WA0040.jpg" alt="Profile Picture"><div id="profileDetails">Loading...</div>`;
+
+          fetch('./Data/admin.json')
+            .then(res => res.json())
+            .then(data => {
+              profileClone.querySelector('#profileDetails').innerHTML = `
+                <p><strong>Username:</strong> ${data.username}</p>
+                <p><strong>Phone:</strong> ${data.phone}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
+                <p><strong>Position:</strong> ${data.position}</p>
+                <p style="font-size:13px;opacity:0.7;">Click profile to close</p>
+              `;
+            })
+            .catch(() => {
+              profileClone.querySelector('#profileDetails').innerHTML = `
+                <p><strong>FULL NAME:</strong> ANTHONY C. OKOYE</p>
+                <p><strong>STAFF NUMBER:</strong> AT 1278</p>
+                <p><strong>PHONE NUMBER:</strong> +2347081150709</p>
+                <p><strong>EMAIL:</strong> okoyea@veritas.edu.ng</p>
+                <p><strong>DEPARTMENT:</strong> COMPUTER SCIENCE</p>
+                <p><strong>POSITION:</strong> ADMINISTRATOR</p>
+                <p style="font-size:13px;opacity:0.7;">Click profile to close</p>
+              `;
+            });
+        }, 900);
+
+        isProfileOpen = true;
+      } else {
+        if (profileClone) {
+          profileClone.classList.remove('profile-expanded');
+          const original = document.querySelector('.profile-container');
+          const rect = original.getBoundingClientRect();
+          profileClone.style.transform = '';
+          profileClone.style.top = `${rect.top}px`;
+          profileClone.style.left = `${rect.left}px`;
+
+          setTimeout(() => {
+            profileClone.remove();
+            profileClone = null;
+          }, 600);
+        }
+        isProfileOpen = false;
+      }
+    }
+
+  </script>
+</body>
+</html>
