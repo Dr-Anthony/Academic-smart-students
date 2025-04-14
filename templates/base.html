@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>{% block title %}SmartStudent{% endblock %}</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="../../Backend/Voice_feature.js"></script>
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
     body {

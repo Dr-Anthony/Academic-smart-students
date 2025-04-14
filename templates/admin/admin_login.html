@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script src="../../Backend/voice.js"></script>
+  <script src="{{ url_for('serve_js', filename='Backend/voice.js') }}"></script>
   <title>Admin Login</title>
   <style>
    
@@ -134,17 +134,19 @@ button[type="submit"]:hover {
     <h2>Admin Login</h2>
     <form id="loginForm" action="#" method="post">
       <div class="input-wrapper">
-        <input type="text" id="staffId" name="staffId" placeholder="Staff ID" required onmouseover="speakText(this)">
+        <input type="text" id="staffId" name="staffId" placeholder="Staff ID" required>
       </div>
 
       <div class="input-wrapper">
-        <input type="password" id="password" name="password" placeholder="Password" required onmouseover="speakText(this)">
-        <button type="button" class="toggle-password" onclick="togglePassword()" onmouseover="speakText(this)">👁️</button>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="button" class="toggle-password" onclick="togglePassword()">Show</button>
       </div>
 
-      <button type="submit" onmouseover="speakText(this)">Log In</button>
+      <button type="submit">Log In</button>
+
     </form>
-    <p>Forgot your password? <a href="admin_forgot.html" onmouseover="speakText(this)">Reset here</a></p>
+    <p>Forgot your password? <a href="{{ url_for('admin_forgot') }}">Reset here</a> </p>
+
   </div>
   <script>
     // Toggle password visibility
@@ -168,7 +170,7 @@ button[type="submit"]:hover {
         const storedPassword = localStorage.getItem("password");
   
         if (staffId === storedStaffId && password === storedPassword) {
-          window.location.href = "admin_dashboard.html"; // Redirect on success
+         window.location.href = "{{ url_for('admin_dashboard') }}"; // Redirect on success
         } else {
           alert("Invalid credentials. Please try again.");
         }

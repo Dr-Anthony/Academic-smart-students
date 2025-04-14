@@ -1,205 +1,125 @@
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
+from werkzeug.utils import secure_filename
 import os
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
-import pyttsx3
-import speech_recognition as sr
-from Backend.student_data import add_student, get_student_by_matric, update_student
-from Backend.course_data import add_course, get_courses
-from Backend.result_data import save_student_result, get_student_result
-from Backend.notice_data import add_notice, get_notices_for_department
-from Backend.auth import verify_student_login, verify_admin_login, generate_matric_number, generate_staff_id
-from Backend.speak import speak_text
-from Backend.listen import listen_command
-from Backend.profile_manager import get_profile, update_profile, check_duplicate_fullname
 
-app = Flask(__name__)
-CORS(app)
+# === Import Blueprints ===
+from .auth import auth_bp
+from .student_data import student_bp
+from .result_data import result_bp
+from .notice_data import notice_bp
+from .course_data import course_bp
+from .profile_manager import profile_bp
 
-# Initialize Flask and tell it where to find the templates
-app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '..', 'templates'))
+# === App Initialization ===
+base_dir = os.path.abspath(os.path.dirname(__file__))
+template_path = os.path.join(base_dir, '..', 'templates')
+app = Flask(__name__, template_folder=template_path)
+app.config['UPLOAD_FOLDER'] = 'uploads'
 
-# ---- Student APIs ----
+# === Ensure Upload Folder Exists ===
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-@app.route("/api/student/register", methods=["POST"])
-def register_student():
-    data = request.json
-    add_student(data)
-    return jsonify({"message": "Student registered successfully"}), 201
+# === Register Blueprints ===
+app.register_blueprint(auth_bp, url_prefix='/api')
+app.register_blueprint(student_bp, url_prefix='/api/student')
+app.register_blueprint(result_bp, url_prefix='/api/result')
+app.register_blueprint(notice_bp, url_prefix='/api/notice')
+app.register_blueprint(course_bp, url_prefix='/api/course')
+app.register_blueprint(profile_bp, url_prefix='/api/profile')
 
-@app.route("/api/student/<matric_no>", methods=["GET"])
-def get_student(matric_no):
-    student = get_student_by_matric(matric_no)
-    if student:
-        return jsonify(student)
-    return jsonify({"error": "Student not found"}), 404
+# ========================= Static Routes =========================
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route("/api/student/<matric_no>", methods=["PUT"])
-def update_student_profile(matric_no):
-    updates = request.json
-    if update_student(matric_no, updates):
-        return jsonify({"message": "Profile updated"})
-    return jsonify({"error": "Student not found"}), 404
+@app.route('/Backend/<path:filename>')
+def serve_js(filename):
+    return send_from_directory('Backend', filename)
 
-# ---- Course APIs ----
-
-@app.route("/api/course/add", methods=["POST"])
-def post_course():
-    data = request.json
-    dept = data["department"]
-    level = data["level"]
-    semester = data["semester"]
-    course = data["course"]
-    add_course(dept, level, semester, course)
-    return jsonify({"message": "Course added"})
-
-@app.route("/api/course/get", methods=["GET"])
-def fetch_courses():
-    dept = request.args.get("department")
-    level = request.args.get("level")
-    semester = request.args.get("semester")
-    courses = get_courses(dept, level, semester)
-    return jsonify(courses)
-
-# ---- Result APIs ----
-
-@app.route("/api/result/save", methods=["POST"])
-def save_result():
-    data = request.json
-    save_student_result(data["matric_no"], data["semester"], data["session"], data)
-    return jsonify({"message": "Result saved successfully"})
-
-@app.route("/api/result/get", methods=["GET"])
-def fetch_result():
-    matric = request.args.get("matric_no")
-    semester = request.args.get("semester")
-    session = request.args.get("session")
-    result = get_student_result(matric, semester, session)
-    if result:
-        return jsonify(result)
-    return jsonify({"error": "No result found"}), 404
-
-# ---- Notice APIs ----
-
-@app.route("/api/notice/post", methods=["POST"])
-def post_notice():
-    data = request.json
-    add_notice(data["title"], data["body"], data.get("department", "all"), data.get("attachment"))
-    return jsonify({"message": "Notice posted"})
-
-@app.route("/api/notice/get", methods=["GET"])
-def get_notices():
-    dept = request.args.get("department", "all")
-    return jsonify(get_notices_for_department(dept))
-
-# ---- Auth APIs ----
-
-@app.route("/api/login/student", methods=["POST"])
-def student_login():
-    data = request.json
-    student = verify_student_login(data["matric"], data["password"])
-    if student:
-        return jsonify(student)
-    return jsonify({"error": "Invalid credentials"}), 401
-
-@app.route("/api/login/admin", methods=["POST"])
+# ========================= Page Routes =========================
+# === Admin Pages ===
+@app.route("/admin_login")
 def admin_login():
-    data = request.json
-    admin = verify_admin_login(data["email"], data["password"])
-    if admin:
-        return jsonify(admin)
-    return jsonify({"error": "Invalid credentials"}), 401
+    return render_template("admin/admin_login.html")
 
-@app.route("/api/id/matric", methods=["POST"])
-def get_new_matric():
-    data = request.json
-    matric = generate_matric_number(data["department"], data["year"])
-    return jsonify({"matric": matric})
-
-@app.route("/api/id/staff", methods=["GET"])
-def get_new_staff_id():
-    staff_id = generate_staff_id()
-    return jsonify({"staff_id": staff_id})
-
-# ---- Profile APIs ----
-
-@app.route("/api/profile/<matric_no>", methods=["GET"])
-def view_profile(matric_no):
-    profile = get_profile(matric_no)
-    if profile:
-        return jsonify(profile)
-    return jsonify({"error": "Profile not found"}), 404
-
-@app.route("/api/profile/<matric_no>", methods=["PATCH"])
-def update_profile_data(matric_no):
-    updates = request.json
-    if update_profile(matric_no, updates):
-        return jsonify({"message": "Profile updated successfully"})
-    return jsonify({"error": "Failed to update profile"}), 400
-
-@app.route("/api/profile/duplicate-check", methods=["POST"])
-def check_duplicate():
-    data = request.json
-    if check_duplicate_fullname(data["fullname"], data["dob"]):
-        return jsonify({"duplicate": True})
-    return jsonify({"duplicate": False})
-
-# ---- Voice APIs ----
-
-# Function to convert text to speech
-def speak_text(text):
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
-
-# Route for speaking text
-@app.route("/api/voice/speak", methods=["POST"])
-def api_speak():
-    text = request.json.get("text", "")
-    if not text:
-        return jsonify({"error": "No text provided"}), 400
-    speak_text(text)
-    return jsonify({"message": f"Speaking: {text}"})
-
-# Function to listen for voice commands
-def listen_command():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening...")
-        audio = recognizer.listen(source)
-
-    try:
-        return recognizer.recognize_google(audio)
-    except sr.UnknownValueError:
-        return "Could not understand audio"
-    except sr.RequestError:
-        return "Speech recognition service unavailable"
-
-# Route for listening to a voice command
-@app.route("/api/voice/listen", methods=["GET"])
-def api_listen():
-    result = listen_command()
-    return jsonify({"result": result})
-
-# Home Route
-@app.route('/')
-def homepage():
-    return render_template('index.html')
-
-@app.route('/student_login')
-def student_login_page():  # renamed function
-    return render_template('user/login.html')
-
-
-@app.route('/student_signup')
-def student_signup():
-    return render_template('user/signup.html')
-
-@app.route('/admin_login')
-def admin_login_page():
-    return render_template('admin/admin_login.html')
-
-@app.route('/admin_signup')
+@app.route("/admin_signup")
 def admin_signup():
-    return render_template('admin/admin_signup.html')
+    return render_template("admin/admin_signup.html")
 
-app.run(debug=True)
+@app.route("/admin_dashboard")
+def admin_dashboard():
+    return render_template("admin/admin_dashboard.html")
+
+@app.route("/add_notice")
+def add_notice():
+    return render_template("admin/add_notice.html")
+
+@app.route("/manage_course_registration")
+def manage_course_registration():
+    return render_template("admin/manage_course_registration.html")
+
+@app.route("/manage_results")
+def manage_results():
+    return render_template("admin/manage_results.html")
+
+@app.route("/edit_students")
+def edit_students():
+    return render_template("admin/edit_students.html")
+
+@app.route("/search")
+def search_page():
+    return render_template("admin/search.html")
+
+@app.route("/student_details")
+def student_details():
+    return render_template("admin/student_details.html")
+
+@app.route("/reset_password")
+def reset_password():
+    return render_template("admin/reset_password.html")
+
+@app.route("/admin_forgot")
+def admin_forgot():
+    return render_template("admin/admin_forgot.html")
+
+# === Student Pages ===
+@app.route("/")
+@app.route("/index")
+def landing():
+    return render_template("index.html")
+
+@app.route("/signup")
+def signup():
+    return render_template("user/signup.html")
+
+@app.route("/login")
+def login():
+    return render_template("user/login.html")
+
+@app.route("/dashboard")
+def dashboard():
+    return render_template("user/dashboard.html")
+
+@app.route("/profile")
+def profile():
+    return render_template("user/profile.html")
+
+@app.route("/profile_update")
+def profile_update():
+    return render_template("user/profile_update.html")
+
+@app.route("/course_registration")
+def course_registration():
+    return render_template("user/course_registration.html")
+
+@app.route("/results")
+def results():
+    return render_template("user/results.html")
+
+@app.route("/Department_preview")
+def department_preview():
+    return render_template("Department_preview.html")
+
+@app.route("/base")
+def base():
+    return render_template("base.html")

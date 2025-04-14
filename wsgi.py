@@ -5,7 +5,7 @@
 from Backend.index import app
 from app import app
 
-app.run()
+app.run(debug=True)
 
 # This file is used for production servers like Gunicorn or uWSGI
 # Run using: gunicorn wsgi:app

@@ -2,7 +2,7 @@ from Backend.index import app
 from flask import jsonify, send_from_directory
 import datetime, os, logging
 
-#  Setup logging to file + console
+# Setup logging to file + console
 log_dir = "log"
 os.makedirs(log_dir, exist_ok=True)
 
@@ -16,34 +16,44 @@ logging.basicConfig(
 )
 logging.getLogger().addHandler(logging.StreamHandler())
 
-#  Routes
+# Configuration for different environments
+app.config['ENV'] = os.getenv('FLASK_ENV', 'production')
+app.config['DEBUG'] = app.config['ENV'] == 'development'
+
+# Routes
 @app.route("/")
 def welcome():
     logging.info("Homepage accessed.")
     return """
-    <html><head><title>Voice Portal</title></head>
-    <body style='font-family: Arial; text-align: center; margin-top: 10%'>
-    <h1> Voice Interactive Portal</h1>
-    <p>Platform is running.</p>
-    <a href='/status'>Check API Status</a>
-    </body></html>
+    <html>
+    <head>
+        <title>Voice Portal</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 10%; }
+            a { text-decoration: none; color: #007bff; }
+            a:hover { text-decoration: underline; }
+        </style>
+    </head>
+    <body>
+        <h1>Voice Interactive Portal</h1>
+        <p>The platform is operational.</p>
+        <a href='/status'>Check API Status</a>
+    </body>
+    </html>
     """
 
 @app.route("/status")
 def status():
-    logging.info("Status checked.")
+    logging.info("Status endpoint accessed.")
     return jsonify({
         "status": "running",
         "timestamp": datetime.datetime.now().isoformat(),
-        "developer": "Tony Okoye"
+        "developer": "Tony Okoye",
+        "environment": app.config['ENV']
     })
 
-@app.route("/static/<path:filename>")
-def serve_static(filename):
-    logging.info(f"Serving static file: {filename}")
-    return send_from_directory(os.path.join(os.getcwd(), 'static'), filename)
-
-#  Auto-run 
-app.run(debug=True)
-
-
+@app.route("/Backend/<path:filename>")
+def serve_backend_files(filename):
+    logging.info(f"Serving Backend file: {filename}")
+    backend_dir = os.path.join(os.getcwd(), 'Backend')
+    return send_from_directory(backend_dir, filename)

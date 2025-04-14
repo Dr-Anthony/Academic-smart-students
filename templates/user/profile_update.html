@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Update Profile</title>
-  <script src="../../Backend/student_helper.js"></script>
-  <script src="../../Backend/Voice_feature.js"></script>
+  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -104,13 +104,13 @@
     <label>Full Name</label>
     <input type="text" id="fullname" readonly />
 
-    <label>Password</label>
+    <label>Password (Required) </label>
     <input type="password" id="password" required />
 
-    <label>Date of Birth</label>
+    <label>Date of Birth (Required) </label>
     <input type="date" id="dob" required />
 
-    <label>Gender</label>
+    <label>Gender (Required) </label>
     <select id="gender" required>
       <option value="" disabled selected>Select gender</option>
       <option>Male</option>
@@ -118,10 +118,10 @@
       <option>Other</option>
     </select>
 
-    <label>Nationality</label>
+    <label>Nationality (Required) </label>
     <input type="text" id="nationality" required />
 
-    <label>State of Origin</label>
+    <label>State of Origin (Required) </label>
     <input type="text" id="state" />
 
     <label>Profile Picture (Required)</label>
@@ -161,22 +161,22 @@
       <option value="software engineering">Software Engineering</option>
     </select>
 
-    <label>Year of Entry</label>
+    <label>Year of Entry (Required) </label>
     <input type="text" id="year" placeholder="e.g. 2022" required />
 
-    <label>Level</label>
-    <input type="text" id="level" placeholder="e.g. 100, 200" />
+    <label>Level (Required) </label>
+    <input type="text" id="level" placeholder="e.g. 100, 200" required />
 
-    <label>Father's Details</label>
+    <label>Father's Details (Required) </label>
     <div class="row">
-      <div><input type="text" id="father_name" placeholder="Father's Name" /></div>
-      <div><input type="tel" id="father_phone" placeholder="Father's Phone Number" /></div>
+      <div><input type="text" id="father_name" placeholder="Father's Name"  required /></div>
+      <div><input type="tel" id="father_phone" placeholder="Father's Phone Number" required /></div>
     </div>
 
-    <label>Mother's Details</label>
+    <label>Mother's Details (Required) </label>
     <div class="row">
-      <div><input type="text" id="mother_name" placeholder="Mother's Name" /></div>
-      <div><input type="tel" id="mother_phone" placeholder="Mother's Phone Number" /></div>
+      <div><input type="text" id="mother_name" placeholder="Mother's Name" required /></div>
+      <div><input type="tel" id="mother_phone" placeholder="Mother's Phone Number" required /></div>
     </div>
 
     <button type="submit">Update Profile</button>
@@ -260,7 +260,7 @@
   
         try {
           // Save to backend
-          const response = await fetch(`http://127.0.0.1:5000/api/student/${matric}`, {
+          const response = await fetch(`http://127.0.0.1:5000/api/profile/${matric}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(profile)
@@ -275,7 +275,8 @@
             localStorage.setItem("user", JSON.stringify(profile));
   
             alert(`Profile saved!\nMatric No: ${matric}`);
-            window.location.href = "login.html";
+            window.location.href = "{{ url_for('login') }}";
+
           } else {
             alert("Profile update failed.");
           }

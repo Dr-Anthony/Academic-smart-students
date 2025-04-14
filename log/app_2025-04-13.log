@@ -18,3 +18,4 @@
  * Running on http://127.0.0.1:5000
 2025-04-13 14:07:11 - [INFO] - [33mPress CTRL+C to quit[0m
 2025-04-13 14:07:11 - [INFO] -  * Restarting with stat
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '..', 'templates'))

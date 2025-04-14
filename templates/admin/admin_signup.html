@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Sign Up</title>
-  <script src="../../Backend/validation.js"></script>
+  <script src="{{ url_for('serve_js', filename='validation.js') }}"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -264,7 +264,7 @@
   
           if (res.ok) {
             alert("Admin registered successfully!");
-            window.location.href = "admin_login.html";
+            window.location.href = "{{ url_for('admin_login') }}";
           } else {
             alert("Error saving admin.");
           }

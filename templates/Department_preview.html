@@ -39,7 +39,8 @@
   <h2>Preview of All Students by Department</h2>
   <div id="allDepartmentsContainer"></div>
 
-  <script src="department_sort_helper.js"></script>
+  <script src="{{ url_for('serve_js', filename='department_sort_helper.js') }}"></script>
+
   <script>
     const container = document.getElementById("allDepartmentsContainer");
     const departments = DepartmentHelper.getAllDepartments();

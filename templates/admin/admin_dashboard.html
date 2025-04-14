@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="../../Backend/student_helper.js"></script>
+  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -181,13 +181,13 @@
 
   <nav>
     <ul>
-      <li><a href="./search.html">Students</a></li>
-      <li><a href="../Department_preview.html">Preview Department</a></li>
-      <li><a href="../admin/add_notice.html">Add Notice</a></li>
-      <li><a href="./manage_course_registration.html">Course Registration</a></li>
-      <li><a href="./manage_results.html">Manage Results</a></li>
+      <li><a href="{{ url_for('search') }}">Students</a></li>
+      <li><a href="{{ url_for('department_preview') }}">Preview Department</a></li>
+      <li><a href="{{ url_for('add_notice') }}">Add Notice</a></li>
+      <li><a href="{{ url_for('manage_course_registration') }}">Course Registration</a></li>
+      <li><a href="{{ url_for('manage_results') }}">Manage Results</a></li>
     </ul>
-  </nav>
+  </nav>  
 
   <main>
     <section>
@@ -198,7 +198,9 @@
 
   <footer>
     <p>&copy; Anthony Okoye 2025. </p>
-    <a href="admin_login.html" class="logout-link" id="logoutBtn">Logout</a>
+
+    <a href="{{ url_for('admin_login') }}" class="logout-link" id="logoutBtn">Logout</a>
+
   </footer>
 
   <script>
@@ -237,7 +239,8 @@
 
         if (diff >= 60 * 60 * 100) {
           alert("You have been logged out due to inactivity.");
-          window.location.href = "admin_login.html";
+          window.location.href = "{{ url_for('admin_login') }}";
+
         }
       }, 60 * 100);
     };
@@ -265,30 +268,30 @@
         setTimeout(() => {
           profileClone.classList.add('profile-expanded');
           profileClone.innerHTML = `<img src="../../Design/IMG-20231212-WA0040.jpg" alt="Profile Picture"><div id="profileDetails">Loading...</div>`;
-
+          
           fetch('./Data/admin.json')
-            .then(res => res.json())
-            .then(data => {
-              profileClone.querySelector('#profileDetails').innerHTML = `
-                <p><strong>Username:</strong> ${data.username}</p>
-                <p><strong>Phone:</strong> ${data.phone}</p>
-                <p><strong>Email:</strong> ${data.email}</p>
-                <p><strong>Name:</strong> ${data.first_name} ${data.last_name}</p>
-                <p><strong>Position:</strong> ${data.position}</p>
-                <p style="font-size:13px;opacity:0.7;">Click profile to close</p>
-              `;
-            })
-            .catch(() => {
-              profileClone.querySelector('#profileDetails').innerHTML = `
-                <p><strong>FULL NAME:</strong> ANTHONY C. OKOYE</p>
-                <p><strong>STAFF NUMBER:</strong> AT 1278</p>
-                <p><strong>PHONE NUMBER:</strong> +2347081150709</p>
-                <p><strong>EMAIL:</strong> okoyea@veritas.edu.ng</p>
-                <p><strong>DEPARTMENT:</strong> COMPUTER SCIENCE</p>
-                <p><strong>POSITION:</strong> ADMINISTRATOR</p>
-                <p style="font-size:13px;opacity:0.7;">Click profile to close</p>
-              `;
-            });
+          .then(res => res.json())
+          .then(data => {
+            profileClone.querySelector('#profileDetails').innerHTML = `
+              <p><strong>STAFF ID:</strong> ${data.staff_id}</p>
+              <p><strong>FULL NAME:</strong> ${data.first_name} ${data.last_name}</p>
+              <p><strong>Phone:</strong> ${data.phone}</p>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Position:</strong> ${data.position}</p>
+              <p style="font-size:13px;opacity:0.7;">Click profile to close</p>
+            `;
+          })
+          .catch(() => {
+            profileClone.querySelector('#profileDetails').innerHTML = `
+              <p><strong>STAFF ID:</strong> AT ****</p>
+              <p><strong>FULL NAME:</strong> ADMIN</p>
+              <p><strong>PHONE:</strong> +234**********</p>
+              <p><strong>EMAIL:</strong> admin***@gmail.com</p>
+              <p><strong>POSITION:</strong> ADMINISTRATOR</p>
+              <p style="font-size:13px;opacity:0.7;">Click profile to close</p>
+            `;
+          });
+        
         }, 900);
 
         isProfileOpen = true;

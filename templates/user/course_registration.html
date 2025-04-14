@@ -5,12 +5,11 @@
   <title>Course Registration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="../../Backend/student_helper.js"></script>
+  <script src="{{ url_for('custom_js', filename='student_helper.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-  <script src="../../Backend/Voice_feature.js"></script>
-
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>
 
   <style>
     body {
@@ -147,7 +146,7 @@
 </head>
 <body>
 
-<a href="dashboard.html" class="back-link">&larr; Back</a>
+<a href="{{ url_for('dashboard') }}" class="back-link">&larr; Back</a>
 
 <div class="container">
   <h2>Course Registration</h2>
@@ -168,7 +167,7 @@
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.matric) {
       alert("Access denied. Please login first.");
-      window.location.href = "login.html";
+      window.location.href = "{{ url_for('login') }}";
     }    
   function capitalizeWords(str) {
     return str.replace(/\b[a-z]/g, char => char.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2');

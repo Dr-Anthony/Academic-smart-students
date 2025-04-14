@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Student Signup</title>
-  <script src="../../Backend/student_helper.js"></script>
-  <script src="../../Backend/one_time thing.js"></script>
-  <script src="../../Backend/validation.js"></script>
-  <script src="../../Backend/Voice_feature.js"></script>
+  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
+  <script src="{{ url_for('serve_js', filename='one_time_thing.js') }}"></script>
+  <script src="{{ url_for('serve_js', filename='validation.js') }}"></script>
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>  
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -99,7 +99,16 @@
   </div>
 
   <script>
-    document.getElementById("signupForm").addEventListener("submit", function(e) {
+    
+  function isDuplicateSignup(email, phone) {
+    return false; // Temporarily assume no duplicates
+  }
+
+  function saveStudentData(data) {
+    console.log("Student data saved!", data); // Temporary stub
+  }
+
+    document.getElementById("signupForm").addEventListener("submit", async function(e) {
       e.preventDefault();
   
       const form = e.target;
@@ -121,41 +130,28 @@
         return;
       }
   
-      // Save and redirect
-      saveStudentData(data);
-      localStorage.setItem("signupData", JSON.stringify(data));
-      alert("Signup successful! Proceeding to profile update.");
-      window.location.href = "profile_update.html";
-    });
-    document.getElementById("signupForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-    
-      const form = e.target;
-      const data = {
-        first_name: form.first_name.value.trim(),
-        middle_name: form.middle_name.value.trim(),
-        last_name: form.last_name.value.trim(),
-        email: form.email.value.trim(),
-        phone: form.phone.value.trim()
-      };
-    
-      const response = await fetch("/api/student/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-    
-      if (response.ok) {
-        localStorage.setItem("signupData", JSON.stringify(data));
-        alert("Signup successful! Proceeding to profile update.");
-        window.location.href = "/profile_update";
-      } else {
-        alert("Signup failed!");
+      try {
+        const response = await fetch("/api/student/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+  
+        if (response.ok) {
+          saveStudentData(data);
+          localStorage.setItem("signupData", JSON.stringify(data));
+          alert("Signup successful! Proceeding to profile update.");
+          window.location.href = "{{ url_for('profile_update') }}";
+
+        } else {
+          alert("Signup failed!");
+        }
+      } catch (error) {
+        console.error("Signup error:", error);
+        alert("An error occurred during signup.");
       }
-    });    
-    
+    });
   </script>
   
-
 </body>
 </html>

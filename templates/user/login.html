@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Student Login</title>
-  <script src="../../Backend/student_helper.js"></script>
-  <script src="../../Backend/Voice_feature.js"></script>
+  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -109,9 +110,10 @@
       <button type="submit">Login</button>
     </form>
 
-    <div class="link">
-      Don't have an account? <a href="signup.html">Apply</a>
-    </div>
+  <div class="link">
+    Don't have an account? <a href="{{ url_for('signup') }}">Apply</a>
+  </div>
+
   </div>
 
   <script>
@@ -132,7 +134,8 @@
       if (res.ok) {
         localStorage.setItem("user", JSON.stringify(data));
         alert("Login successful!");
-        window.location.href = "dashboard.html";
+        window.location.href = "{{ url_for('dashboard') }}";
+
       } else {
         alert(data.error || "Login failed.");
       }

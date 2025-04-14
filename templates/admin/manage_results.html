@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <title>Manage Results</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="../../Backend/student_helper.js"></script>
+  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="../../Backend/student_helper.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -177,7 +176,7 @@
 </head>
 <body>
 
-<a href="./admin_dashboard.html" class="back-link">&larr; Back to Dashboard</a>
+  <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back To Dashboard </a>
 
 <div class="container">
   <h2>Result Management System</h2>

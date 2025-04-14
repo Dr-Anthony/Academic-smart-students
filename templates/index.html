@@ -164,8 +164,8 @@
       <label>STUDENT</label>
       <h2>Welcome Student</h2>
       <p>For visually impaired students using reinforcement learning.</p>
-      <a href="{{ url_for('student_login_page') }}">Login</a>
-      <a href="{{ url_for('student_signup') }}">Applicant</a>
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('signup') }}">Applicant</a>
     </div>
 
     <!-- Admin Box -->
@@ -173,13 +173,13 @@
       <label>ADMIN</label>
       <h2>Welcome Admin</h2>
       <p>Manage and monitor results for visually impaired students.</p>
-      <a href="{{ url_for('admin_login_page') }}">Login</a>
+      <a href="{{ url_for('admin_login') }}">Login</a>
       <a href="{{ url_for('admin_signup') }}">Setup</a>
     </div>
   </div>
 
-  <script src="../Backend/student_helper.js"></script>
-  <script src="../Backend/Voice_feature.js"></script>
+  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>
   <script>
     const boxes = document.querySelectorAll(".welcome-box");
     boxes.forEach(box => {
