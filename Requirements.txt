@@ -1,0 +1,8 @@
+Flask==2.2.5
+SpeechRecognition==3.10.0
+pyttsx3==2.90
+pyaudio==0.2.11  # Install via .whl manually on Windows if pip fails
+python-dotenv==1.0.0
+werkzeug==2.2.3
+setuptools==65.5.1
+wheel==0.38.4

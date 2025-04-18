@@ -5,12 +5,7 @@ from flask import Blueprint, request, jsonify
 DATA_FILE = os.path.join('Data', 'students.json')
 student_bp = Blueprint('student_bp', __name__)
 
-@student_bp.route('/register', methods=['POST'])
-def api_register_student():
-    data = request.get_json()
-    add_student(data)
-    return jsonify({'message': 'Student registered successfully'}), 200
-
+# === Load & Save Helpers ===
 def load_students():
     if not os.path.exists(DATA_FILE):
         return []
@@ -21,6 +16,7 @@ def save_students(students):
     with open(DATA_FILE, 'w') as file:
         json.dump(students, file, indent=4)
 
+# === Core Operations ===
 def add_student(student):
     students = load_students()
     students.append(student)
@@ -41,15 +37,18 @@ def update_student(matric_no, updated_data):
             save_students(students)
             return True
     # If not found, add as new
+    updated_data["matric"] = matric_no
     students.append(updated_data)
     save_students(students)
     return True
 
-@student_bp.route('/add', methods=['POST'])
-def api_add_student():
+# === API Endpoints ===
+
+@student_bp.route('/register', methods=['POST'])
+def api_register_student():
     data = request.get_json()
     add_student(data)
-    return jsonify({'message': 'Student added successfully'})
+    return jsonify({'message': 'Student registered successfully'}), 200
 
 @student_bp.route('/<matric_no>', methods=['GET'])
 def api_get_student(matric_no):

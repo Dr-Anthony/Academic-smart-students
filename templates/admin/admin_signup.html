@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Sign Up</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <script src="{{ url_for('serve_js', filename='validation.js') }}"></script>
   <style>
     * {
@@ -28,23 +29,20 @@
       overflow: hidden;
     }
 
-    /* Main form container */
     form {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 500px;
-      height: auto;
+      overflow-y: auto;
+      max-height: 750px;
       text-align: center;
-      overflow-y: auto; /* Allow scrolling if content overflows */
-      max-height: 700px; /* Limit the height to prevent overflow */
     }
 
-    /* Form hover animation */
     form:hover {
-      transform: scale(1.05);
+      transform: scale(1.02);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     }
 
@@ -53,13 +51,6 @@
       color: #2c3e50;
       margin-bottom: 20px;
       font-weight: bold;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 15px;
-      font-weight: 500;
-      color: #2c3e50;
     }
 
     input[type="text"],
@@ -78,10 +69,7 @@
       outline: none;
     }
 
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    input[type="tel"]:focus,
-    input[type="password"]:focus {
+    input:focus {
       border-color: #2193b0;
     }
 
@@ -158,12 +146,10 @@
       margin-bottom: 10px;
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
       form {
         padding: 30px;
         max-width: 90%;
-        height: auto;
       }
 
       h2 {
@@ -175,20 +161,61 @@
       }
     }
   </style>
+</head>
+<body>
+  <form id="adminSignupForm" onsubmit="return validateForm()" enctype="multipart/form-data">
+    <h2>Admin Sign Up</h2>
+
+    <input type="text" id="name" name="name" placeholder="Full Name" required />
+    <input type="email" id="email" name="email" placeholder="Email" required />
+    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+    <input type="text" id="position" name="position" value="Administrator" readonly />
+    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required />
+
+    <div class="password-container">
+      <input type="password" id="password_field" name="password" placeholder="Password" required>
+      <span class="toggle-password" id="togglePassword" onclick="togglePassword()">Show</span>
+    </div>
+
+    <div class="strength-meter" id="strengthMeter">
+      <div class="strength-bar" id="strengthMeterBar"></div>
+    </div>
+    <p id="strengthText" class="strength-text"></p>
+
+    <button type="button" onclick="previewDetails()">Preview Details</button>
+
+    <div id="preview_section">
+      <h3>Preview Information</h3>
+      <p><strong>Staff ID:</strong> <span id="staff_display"></span></p>
+      <button type="button" onclick="confirmSave()">Confirm and Save</button>
+    </div>
+  </form>
 
   <script>
+    function togglePassword() {
+      const input = document.getElementById("password_field");
+      const toggle = document.getElementById("togglePassword");
+      if (input.type === "password") {
+        input.type = "text";
+        toggle.textContent = "Hide";
+      } else {
+        input.type = "password";
+        toggle.textContent = "Show";
+      }
+    }
+
     async function checkPasswordStrength(password) {
       const strengthBar = document.getElementById("strengthMeterBar");
       const strengthText = document.getElementById("strengthText");
-  
+
       const regex = {
         weak: /^(?=.*[a-z])(?=.*\d).{6,}$/,
         medium: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/,
         strong: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{12,}$/
       };
-  
+
       let strength = "Too Weak", percent = 0, color = "#ccc";
-  
+
       if (regex.strong.test(password)) {
         strength = "Strong Password";
         percent = 100;
@@ -202,130 +229,71 @@
         percent = 33;
         color = "#F44336";
       }
-  
+
       strengthText.textContent = strength;
       strengthText.style.color = color;
       strengthBar.style.width = percent + "%";
       strengthBar.style.backgroundColor = color;
     }
-  
+
+    document.getElementById("password_field").addEventListener("input", function () {
+      checkPasswordStrength(this.value);
+    });
+
     async function previewDetails() {
-      const firstName = document.getElementById("first_name").value.trim();
-      const lastName = document.getElementById("last_name").value.trim();
+      const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
       const email = document.getElementById("email").value.trim();
       const position = document.getElementById("position").value.trim();
-      const middleName = document.getElementById("middle_name").value.trim();
       const profilePic = document.getElementById("profile_picture").files[0];
       const password = document.getElementById("password_field").value;
-  
+
       if (!profilePic) {
         alert("Please upload a profile picture.");
         return;
       }
-  
-      const res = await fetch("http://127.0.0.1:5000/api/id/staff");
+
+      const res = await fetch("/api/id/staff");
       const { staff_id } = await res.json();
-  
+
       localStorage.setItem("staffId", staff_id);
-      localStorage.setItem("firstName", firstName);
-      localStorage.setItem("lastName", lastName);
-      localStorage.setItem("middleName", middleName);
+      localStorage.setItem("name", name);
       localStorage.setItem("phone", phone);
       localStorage.setItem("email", email);
       localStorage.setItem("position", position);
       localStorage.setItem("profilePic", profilePic.name);
       localStorage.setItem("password", password);
-  
+
       document.getElementById("staff_display").innerText = staff_id;
       document.getElementById("preview_section").style.display = "block";
     }
-  
+
     async function confirmSave() {
-      if (confirm("Are you sure you want to save this information? This cannot be edited later.")) {
-        if (confirm("Final confirmation. Do you want to save?")) {
-          const adminData = {
-            staff_id: localStorage.getItem("staffId"),
-            first_name: localStorage.getItem("firstName"),
-            last_name: localStorage.getItem("lastName"),
-            middle_name: localStorage.getItem("middleName"),
-            phone: localStorage.getItem("phone"),
-            email: localStorage.getItem("email"),
-            position: localStorage.getItem("position"),
-            profile_picture: localStorage.getItem("profilePic"),
-            password: localStorage.getItem("password")
-          };
-  
-          const res = await fetch("http://127.0.0.1:5000/api/admin/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(adminData)
-          });
-  
-          if (res.ok) {
-            alert("Admin registered successfully!");
-            window.location.href = "{{ url_for('admin_login') }}";
-          } else {
-            alert("Error saving admin.");
-          }
+      if (confirm("Are you sure you want to save this information?")) {
+        const adminData = {
+          staff_id: localStorage.getItem("staffId"),
+          name: localStorage.getItem("name"),
+          phone: localStorage.getItem("phone"),
+          email: localStorage.getItem("email"),
+          position: localStorage.getItem("position"),
+          profile_picture: localStorage.getItem("profilePic"),
+          password: localStorage.getItem("password")
+        };
+
+        const res = await fetch("/api/admin/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(adminData)
+        });
+
+        if (res.ok) {
+          alert("Admin registered successfully!");
+          window.location.href = "{{ url_for('login_home') }}";
+        } else {
+          alert("Error saving admin.");
         }
       }
     }
-  
-    function togglePassword() {
-      const input = document.getElementById("password_field");
-      const toggle = document.getElementById("togglePassword");
-      if (input.type === "password") {
-        input.type = "text";
-        toggle.textContent = "Hide";
-      } else {
-        input.type = "password";
-        toggle.textContent = "Show";
-      }
-    }
-  
-    window.onload = function () {
-      document.getElementById("password_field").addEventListener("input", function () {
-        checkPasswordStrength(this.value);
-      });
-    };
   </script>
-  
-</head>
-<body>
-  <form id="adminSignupForm" action="/save_admin" method="POST" enctype="multipart/form-data">
-    <h2>Admin Sign Up</h2>
-  
-    <input type="text" id="name" name="name" placeholder="Full Name" required />
-  
-    <input type="email" id="email" name="email" placeholder="Email" required />
-  
-    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
-  
-    <input type="text" id="position" name="position" value="Administrator" readonly />
-  
-    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" required />
-  
-    <!-- Password with strength and show/hide -->
-    <div class="password-container">
-      <input type="password" id="password" name="password" placeholder="Password" required>
-      <span class="toggle-password" id="togglePassword" onclick="togglePassword()">Show</span>
-    </div>
-  
-    <div class="strength-meter" id="strengthMeter">
-      <div class="strength-bar" id="strengthMeterBar"></div>
-    </div>
-    <p id="strengthText" class="strength-text"></p>
-  
-    <!-- Preview and confirmation -->
-    <button type="button" onclick="previewDetails()">Preview Details</button>
-  
-    <div id="preview_section" style="display: none;">
-      <h3>Preview Information</h3>
-      <p><strong>Staff ID:</strong> <span id="staff_display"></span></p>
-      <button type="button" onclick="confirmSave()">Confirm and Save</button>
-    </div>
-  </form>
-  
 </body>
 </html>

@@ -1,5 +1,10 @@
 services:
   - type: web
-    name: academic-smart-students
+    name: website-for-the-blind
     env: docker
     plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    autoDeploy: true

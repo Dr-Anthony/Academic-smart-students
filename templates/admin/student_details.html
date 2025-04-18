@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>STUDENT_DETAILS0</title>
-  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
+  <meta charset="UTF-8">
+  <title>Student Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -33,6 +32,7 @@
       border-radius: 8px;
       transition: background-color 0.3s;
     }
+
     .back-link:hover {
       background-color: rgb(214, 124, 7);
     }
@@ -85,10 +85,10 @@
 </head>
 <body>
 
-  <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back To Dashboard </a>
+  <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back To Dashboard</a>
 
   <div class="container">
-    <h2>My Profile</h2>
+    <h2>Student Profile</h2>
     <div class="profile-pic">
       <img src="" alt="Profile Picture" id="profilePic" />
     </div>
@@ -131,6 +131,10 @@
         <div class="label">Level</div>
         <div class="value" id="level"></div>
       </div>
+      <div class="field">
+        <div class="label">Year</div>
+        <div class="value" id="year"></div>
+      </div>
     </div>
 
     <div class="row">
@@ -157,49 +161,43 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const matric = urlParams.get("matric");
-  
-      const fields = [
-        'fullname', 'dob', 'gender', 'nationality', 'state',
-        'department', 'level', 'father_name', 'father_phone',
-        'mother_name', 'mother_phone'
-      ];
-  
-      let user = null;
-  
-      if (matric) {
-        try {
-          const res = await fetch(`http://127.0.0.1:5000/api/student/${matric}`);
-          if (res.ok) {
-            user = await res.json();
-          } else {
-            alert("Student not found via API. Falling back to local data.");
-          }
-        } catch (err) {
-          console.error("Fetch error:", err);
-          alert("Error fetching from server. Falling back to local data.");
-        }
-      }
-  
-      if (!user) {
-        user = JSON.parse(localStorage.getItem("user"));
-        if (!user) {
-          alert("No profile data found in localStorage.");
+    const baseURL = window.location.origin;
+    const params = new URLSearchParams(window.location.search);
+    const matric = params.get("matric");
+
+    const fields = [
+      'fullname', 'matric', 'department', 'level', 'year', 'dob', 'gender',
+      'nationality', 'state', 'father_name', 'father_phone', 'mother_name', 'mother_phone'
+    ];
+
+    async function loadProfile(matric) {
+      let student = null;
+      try {
+        const res = await fetch(`${baseURL}/api/student/${matric}`);
+        if (!res.ok) throw new Error("API call failed");
+        student = await res.json();
+      } catch (err) {
+        console.warn("Using localStorage as fallback");
+        const localData = JSON.parse(localStorage.getItem("user"));
+        if (localData && localData.matric === matric) {
+          student = localData;
+        } else {
+          alert("Student profile not found.");
           return;
         }
       }
-  
+
       fields.forEach(field => {
-        const elem = document.getElementById(field);
-        if (elem) elem.textContent = user[field] || "N/A";
+        const el = document.getElementById(field);
+        if (el) el.textContent = student[field] || "N/A";
       });
-  
+
       const profilePic = document.getElementById("profilePic");
-      if (profilePic) profilePic.src = user.profilePic || "https://via.placeholder.com/130";
-    });
+      profilePic.src = student.profilePic || "https://via.placeholder.com/130";
+    }
+
+    if (matric) loadProfile(matric);
   </script>
-  
+
 </body>
 </html>

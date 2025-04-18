@@ -101,16 +101,18 @@
 <body>
   <form class="container" id="profileForm">
     <h2>Update Profile</h2>
+    <p><strong>Matric No:</strong> <span id="matricDisplay">Generating...</span></p>
+
     <label>Full Name</label>
     <input type="text" id="fullname" readonly />
 
-    <label>Password (Required) </label>
+    <label>Password (Required)</label>
     <input type="password" id="password" required />
 
-    <label>Date of Birth (Required) </label>
+    <label>Date of Birth (Required)</label>
     <input type="date" id="dob" required />
 
-    <label>Gender (Required) </label>
+    <label>Gender (Required)</label>
     <select id="gender" required>
       <option value="" disabled selected>Select gender</option>
       <option>Male</option>
@@ -118,10 +120,10 @@
       <option>Other</option>
     </select>
 
-    <label>Nationality (Required) </label>
+    <label>Nationality (Required)</label>
     <input type="text" id="nationality" required />
 
-    <label>State of Origin (Required) </label>
+    <label>State of Origin (Required)</label>
     <input type="text" id="state" />
 
     <label>Profile Picture (Required)</label>
@@ -157,78 +159,83 @@
       <option value="peace and conflict studies">Peace and Conflict Studies</option>
       <option value="pharmacy">Pharmacy</option>
       <option value="political science and diplomacy">Political Science and Diplomacy</option>
-      <option value="publica dministration">Public Administration</option>
+      <option value="public administration">Public Administration</option>
       <option value="software engineering">Software Engineering</option>
     </select>
 
-    <label>Year of Entry (Required) </label>
+    <label>Year of Entry (Required)</label>
     <input type="text" id="year" placeholder="e.g. 2022" required />
 
-    <label>Level (Required) </label>
+    <label>Level (Required)</label>
     <input type="text" id="level" placeholder="e.g. 100, 200" required />
 
-    <label>Father's Details (Required) </label>
+    <label>Father's Details (Required)</label>
     <div class="row">
-      <div><input type="text" id="father_name" placeholder="Father's Name"  required /></div>
+      <div><input type="text" id="father_name" placeholder="Father's Name" required /></div>
       <div><input type="tel" id="father_phone" placeholder="Father's Phone Number" required /></div>
     </div>
 
-    <label>Mother's Details (Required) </label>
+    <label>Mother's Details (Required)</label>
     <div class="row">
       <div><input type="text" id="mother_name" placeholder="Mother's Name" required /></div>
       <div><input type="tel" id="mother_phone" placeholder="Mother's Phone Number" required /></div>
     </div>
 
     <button type="submit">Update Profile</button>
-    
   </form>
 
   <script>
+    const baseURL = window.location.origin;
+
     document.addEventListener("DOMContentLoaded", async () => {
-      // Get signup data and autofill full name
       const signupData = JSON.parse(localStorage.getItem("signupData") || "{}");
       const fullName = `${signupData.last_name} ${signupData.middle_name || ""} ${signupData.first_name}`.trim();
       document.getElementById("fullname").value = fullName;
-  
+
       const dept = document.getElementById("department");
       const year = document.getElementById("year");
-  
-      // Generate matric on department or year change
-      dept.addEventListener("change", async () => {
-        if (dept.value && year.value) await generateMatric(dept.value, year.value);
-      });
-  
-      year.addEventListener("blur", async () => {
-        if (dept.value && year.value) await generateMatric(dept.value, year.value);
-      });
-  
+
       async function generateMatric(department, year) {
         try {
-          const res = await fetch("http://127.0.0.1:5000/api/id/matric", {
+          const res = await fetch(`${baseURL}/api/id/matric`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ department, year })
           });
           const data = await res.json();
-          localStorage.setItem("generated_matric", data.matric);
+          if (data.matric) {
+            localStorage.setItem("generated_matric", data.matric);
+            document.getElementById("matricDisplay").textContent = data.matric;
+          }
         } catch (error) {
           alert("Failed to generate matric number.");
           console.error(error);
         }
       }
+
+      dept.addEventListener("change", () => {
+        if (dept.value && year.value) generateMatric(dept.value, year.value);
+      });
+
+      year.addEventListener("blur", () => {
+        if (dept.value && year.value) generateMatric(dept.value, year.value);
+      });
+
+      const savedMatric = localStorage.getItem("generated_matric");
+      if (savedMatric) document.getElementById("matricDisplay").textContent = savedMatric;
     });
-  
+
     document.getElementById("profileForm").addEventListener("submit", async function (e) {
       e.preventDefault();
-  
-      const matric = localStorage.getItem("generated_matric");
+
       const file = document.getElementById("profilePic").files[0];
-  
+      const matric = localStorage.getItem("generated_matric") || (JSON.parse(localStorage.getItem("user") || '{}').matric);
+
       if (!file || !matric) {
-        alert("Missing profile picture or generated matric.");
+        alert("Missing profile picture or matric number. Make sure you selected department and year.");
         return;
       }
-  
+
       const reader = new FileReader();
       reader.onload = async function (event) {
         const profile = {
@@ -248,47 +255,32 @@
           profilePic: event.target.result,
           matric: matric
         };
-  
-        // Check for duplicates
-        let allStudents = JSON.parse(localStorage.getItem("students")) || [];
-        const duplicate = allStudents.find(s => s.fullname === profile.fullname && s.dob === profile.dob);
-  
-        if (duplicate) {
-          alert("A profile with this full name already exists. Please avoid duplicate registration.");
-          return;
-        }
-  
+
         try {
-          // Save to backend
-          const response = await fetch(`http://127.0.0.1:5000/api/profile/${matric}`, {
+          const res = await fetch(`${baseURL}/api/profile/${matric}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(profile)
           });
-  
-          if (response.ok) {
-            // Save locally too
-            allStudents.push(profile);
-            const allStudentsString = JSON.stringify(allStudents);
-            localStorage.setItem("students", allStudentsString);
-            localStorage.setItem("students_backup", allStudentsString);
-            localStorage.setItem("user", JSON.stringify(profile));
-  
-            alert(`Profile saved!\nMatric No: ${matric}`);
-            window.location.href = "{{ url_for('login') }}";
 
+          if (res.ok) {
+            const allStudents = JSON.parse(localStorage.getItem("students") || "[]");
+            allStudents.push(profile);
+            localStorage.setItem("students", JSON.stringify(allStudents));
+            localStorage.setItem("user", JSON.stringify(profile));
+            alert(`Profile saved successfully!\nMatric No: ${matric}`);
+            window.location.href = "{{ url_for('login_home') }}";
           } else {
             alert("Profile update failed.");
           }
-        } catch (error) {
-          alert("An error occurred while saving profile.");
-          console.error(error);
+        } catch (err) {
+          alert("An error occurred while saving your profile.");
+          console.error(err);
         }
       };
-  
+
       reader.readAsDataURL(file);
     });
   </script>
-  
 </body>
 </html>

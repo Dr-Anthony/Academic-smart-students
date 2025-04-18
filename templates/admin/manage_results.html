@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Manage Results</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
@@ -23,395 +24,340 @@
       padding: 30px;
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      animation: fadeIn 1s ease-in-out;
-    }
-    .back-link {
-      display: inline-block;
-      margin: 20px;
-      font-weight: bold;
-      color: #fff;
-      text-decoration: none;
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: 0.3s ease;
-    }
-    .back-link:hover {
-      background-color: #ff7e5f;
-      transform: scale(1.05);
     }
     h2, h3 {
-      color: #00ffcc;
       text-align: center;
-      animation: slideDown 0.8s ease-in-out;
+      color: #00ffcc;
     }
-    table {
+    label, input, select, textarea, button {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+      margin-bottom: 15px;
+      display: block;
     }
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #444;
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-    input[type="number"], input[type="text"], select {
-      padding: 8px;
+    input, select, textarea {
+      padding: 10px;
       border-radius: 8px;
       border: none;
-      width: 100%;
       margin-top: 8px;
     }
-    #toast {
-      visibility: hidden;
-      min-width: 250px;
-      background-color: #28a745;
-      color: white;
-      text-align: center;
-      border-radius: 8px;
-      padding: 16px;
-      position: fixed;
-      z-index: 9999;
-      left: 50%;
-      bottom: 30px;
-      transform: translateX(-50%);
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      font-weight: bold;
-      opacity: 0;
-      transition: opacity 0.5s ease, visibility 0.5s;
+    textarea {
+      resize: vertical;
     }
-    
-    #toast.show-toast {
-      visibility: visible;
-      opacity: 1;
-    }
-    
     button {
-      margin-top: 20px;
-      padding: 12px 24px;
+      padding: 12px;
       font-weight: bold;
       border: none;
       border-radius: 8px;
       background: linear-gradient(to right, #11998e, #38ef7d);
       color: white;
       cursor: pointer;
-      transition: 0.3s ease;
     }
     button:hover {
-      transform: scale(1.05);
       background: linear-gradient(to right, #43cea2, #185a9d);
     }
-    .section {
-      margin-top: 30px;
-      animation: fadeInUp 1s ease-in-out;
-    }
-    #resultSummary, #studentProfile {
+    table {
+      width: 100%;
       margin-top: 20px;
-      background: rgba(255, 255, 255, 0.07);
-      padding: 20px;
-      border-radius: 12px;
-      animation: fadeIn 0.6s ease-in-out;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #444;
+      background-color: rgba(255, 255, 255, 0.05);
     }
     canvas {
       margin-top: 40px;
-      animation: fadeIn 0.8s ease-in-out;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Remove number input spinners */
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    input[type="number"] {
-      -moz-appearance: textfield; /* Firefox */
-    }
-    .custom-select-wrapper {
-      position: relative;
+    .back-link {
       display: inline-block;
-      width: 100%;
-      margin-top: 8px;
-    }
-    
-    .custom-select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
       color: #fff;
-      padding: 10px;
-      font-size: 16px;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
       border-radius: 8px;
-      border: none;
-      width: 100%;
-      cursor: pointer;
-      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-caret-down-fill' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658A.5.5 0 0 1 2.866 5h10.268a.5.5 0 0 1 .415.658l-4.796 5.482a.5.5 0 0 1-.752 0z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 16px 16px;
+      text-decoration: none;
     }
-    
-    .custom-select:focus {
-      outline: none;
-      background-color: rgba(255, 255, 255, 0.2);
+    .back-link:hover {
+      background-color: #ff7e5f;
+      transform: scale(1.05);
     }
-    
   </style>
 </head>
 <body>
 
   <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back To Dashboard </a>
 
-<div class="container">
-  <h2>Result Management System</h2>
+  <div class="container">
+    <h2>Result Management System</h2>
 
-  <div class="section">
-    <h3>Fetch Student Profile</h3>
-    <form id="fetchStudentForm">
-      <label for="matric_no">Matric Number:</label>
-      <input type="text" id="matric_no" required />
+    <!-- Student Result Submission -->
+    <div class="section">
+      <h3>Enter Student Result</h3>
+      <form id="resultForm">
+        <label for="matric">Matric Number</label>
+        <input type="text" id="matric" required />
 
-      <label for="semester">Semester:</label>
-      <select id="semester" required>
-        <option value="">-- Select Semester --</option>
-        <option value="first">First</option>
-        <option value="second">Second</option>
-      </select>
+        <label for="session">Session</label>
+        <input type="text" id="session" placeholder="e.g. 2024/2025" required />
 
-      <button type="submit">Fetch Profile</button>
-    </form>
-    <div id="studentProfile"></div>
+        <label for="semester">Semester</label>
+        <select id="semester" required>
+          <option value="first">First Semester</option>
+          <option value="second">Second Semester</option>
+        </select>
+
+        <label for="results">Results (JSON format)</label>
+        <textarea id="results" rows="6" placeholder='[{"code":"CSC101","title":"Intro to CS","score":85}]' required></textarea>
+
+        <button type="submit">Submit Result</button>
+      </form>
+    </div>
+
+    <!-- Student Profile Fetching & GPA Section -->
+    <div class="section">
+      <h3>Fetch Student Profile</h3>
+      <form id="fetchStudentForm">
+        <label for="matric_no">Matric Number:</label>
+        <input type="text" id="matric_no" required />
+
+        <label for="semesterProfile">Semester:</label>
+        <select id="semesterProfile" required>
+          <option value="">-- Select Semester --</option>
+          <option value="first">First</option>
+          <option value="second">Second</option>
+        </select>
+
+        <button type="submit">Fetch Profile</button>
+      </form>
+      <div id="studentProfile"></div>
+    </div>
+
+    <div class="section">
+      <h3>Courses and Scores</h3>
+      <form id="scoreForm">
+        <table id="courseTable">
+          <thead>
+            <tr>
+              <th>Course Code</th>
+              <th>Course Title</th>
+              <th>Unit</th>
+              <th>Score</th>
+              <th>Grade</th>
+              <th>Grade Point</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button type="submit">Calculate GPA/CGPA</button>
+      </form>
+      <div id="resultSummary"></div>
+      <button onclick="downloadExcel()">Download Excel File</button>
+    </div>
+
+    <div class="section">
+      <h3>Visualization</h3>
+      <canvas id="resultChart"></canvas>
+    </div>
   </div>
 
-  <div class="section">
-    <h3>Courses and Scores</h3>
-    <form id="scoreForm">
-      <table id="courseTable">
-        <thead>
-          <tr>
-            <th>Course Code</th>
-            <th>Course Title</th>
-            <th>Score</th>
-            <th>Grade</th>
-            <th>Grade Point</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="submit">Calculate GPA/CGPA</button>
-    </form>
-    <div id="resultSummary"></div>
-    <button onclick="saveResults()">
-      <div id="toast">
-        Result sent successfully!
-      </div>
-    </button>
-    <button onclick="downloadExcel()">Download Excel File</button>
-  </div>
+  <script>
+    const baseURL = window.location.origin;
+    let chart, currentStudent = {};
+    const ctx = document.getElementById('resultChart').getContext('2d');
 
-  <div class="section">
-    <h3>Visualization</h3>
-    <canvas id="resultChart"></canvas>
-  </div>
-</div>
-
-<script>
-  let chart;
-  let currentStudent = {};
-  const resultChartCtx = document.getElementById('resultChart').getContext('2d');
-
-  document.getElementById('fetchStudentForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const query = document.getElementById('matric_no').value.trim();
-    const semester = document.getElementById('semester').value.trim().toLowerCase();
-
-    if (!query || !semester) {
-      alert("Please enter a search term and select a semester.");
-      return;
-    }
-
-    const results = StudentHelper.smartSearchStudent(query);
-    const profileDiv = document.getElementById("studentProfile");
-
-    if (results.length === 0) {
-      profileDiv.innerHTML = '<p style="color:red">No matching students found.</p>';
-      return;
-    }
-
-    profileDiv.innerHTML = results.map((student, index) => {
-      const courses = StudentHelper.getRegisteredCourses(student.department, student.level, semester);
-      student.semester = semester;
-      student.courses = courses.length > 0 ? courses : (student.courses || []);
-
-      return `
-        <div style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
-          <h4>Student ${index + 1}</h4>
-          <p><strong>Name:</strong> ${student.fullname}</p>
-          <p><strong>Matric Number:</strong> ${student.matric}</p>
-          <p><strong>Department:</strong> ${student.department}</p>
-          <p><strong>Level:</strong> ${student.level}</p>
-          <p><strong>Semester:</strong> ${semester}</p>
-          <button onclick='loadStudent(${JSON.stringify(student)})'>Select This Student</button>
-        </div>
-      `;
-    }).join('');
-  });
-
-  function loadStudent(rawStudent) {
-    const student = typeof rawStudent === "string" ? JSON.parse(rawStudent) : rawStudent;
-    currentStudent = student;
-    showStudentProfile(student);
-    populateCourseTable(student.courses);
-    alert(`${student.fullname} loaded for result processing.`);
-  }
-
-  function showStudentProfile(student) {
-    document.getElementById('studentProfile').innerHTML = `
-      <p><strong>Name:</strong> ${student.fullname}</p>
-      <p><strong>Matric Number:</strong> ${student.matric}</p>
-      <p><strong>Department:</strong> ${student.department}</p>
-      <p><strong>Level:</strong> ${student.level}</p>
-      <p><strong>Semester:</strong> ${student.semester}</p>
-    `;
-  }
-
-  function populateCourseTable(courses) {
-    const tbody = document.querySelector('#courseTable tbody');
-    tbody.innerHTML = '';
-    courses.forEach(course => {
-      const row = document.createElement('tr');
-      row.classList.add("course-row");
-      row.innerHTML = `
-        <td class="code">${course.code}</td>
-        <td class="title">${course.title}</td>
-        <td class="unit">${course.unit || 3}</td>
-        <td><input class="score" type="number" required /></td>
-        <td class="grade"></td>
-        <td class="gradePoint"></td>
-      `;
-      tbody.appendChild(row);
+    // SUBMIT RESULT
+    document.getElementById("resultForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const matric = document.getElementById("matric").value.trim();
+      const session = document.getElementById("session").value.trim();
+      const semester = document.getElementById("semester").value;
+      const rawResults = document.getElementById("results").value.trim();
+      let parsedResults;
+      try {
+        parsedResults = JSON.parse(rawResults);
+      } catch {
+        alert("Invalid JSON format.");
+        return;
+      }
+      const payload = { matric_no: matric, session, semester, results: parsedResults };
+      try {
+        const res = await fetch(`${baseURL}/api/result/add`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          alert("Result submitted successfully!");
+          document.getElementById("resultForm").reset();
+        } else {
+          const err = await res.json();
+          alert(err.error || "Submission failed.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error submitting result.");
+      }
     });
-  }
 
-  document.getElementById('scoreForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+    // FETCH PROFILE
+    document.getElementById('fetchStudentForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const query = document.getElementById('matric_no').value.trim();
+      const semester = document.getElementById('semesterProfile').value;
+      const profileDiv = document.getElementById("studentProfile");
+      if (!query || !semester) return alert("Provide matric and semester.");
 
-    const rows = document.querySelectorAll(".course-row");
-    const results = [];
-
-    let totalPoints = 0;
-    let totalUnits = 0;
-
-    for (const row of rows) {
-      const score = parseInt(row.querySelector(".score").value);
-      if (isNaN(score) || score < 0 || score > 99) {
-        alert(" Inappropriate score! Please enter a valid score between 0 and 99.");
-        row.querySelector(".score").focus();
+      const results = StudentHelper.smartSearchStudent(query);
+      if (results.length === 0) {
+        profileDiv.innerHTML = '<p style="color:red">No matching students found.</p>';
         return;
       }
 
-      const code = row.querySelector(".code").textContent;
-      const title = row.querySelector(".title").textContent;
-      const unit = parseInt(row.querySelector(".unit").textContent);
-      const grade = getGrade(score);
-      const gradePoint = getGradePoint(grade);
-
-      row.querySelector(".grade").textContent = grade;
-      row.querySelector(".gradePoint").textContent = gradePoint;
-
-      totalPoints += gradePoint * unit;
-      totalUnits += unit;
-
-      results.push({ code, title, score, grade, gradePoint, unit });
-    }
-
-    const gpa = totalUnits ? (totalPoints / totalUnits).toFixed(2) : "0.00";
-    let cgpa = gpa;
-    const level = parseInt(currentStudent.level);
-
-    if (level > 100 && currentStudent.cgpa) {
-      cgpa = ((parseFloat(currentStudent.cgpa) + parseFloat(gpa)) / 2).toFixed(2);
-    }
-
-    let summary = `<p><strong>Total Units:</strong> ${totalUnits}</p><p><strong>GPA:</strong> ${gpa}</p>`;
-    if ((level > 100 && level < 700) || (level >= 700 && currentStudent.semester === 'second')) {
-      summary += `<p><strong>CGPA:</strong> ${cgpa}</p>`;
-    }
-
-    document.getElementById('resultSummary').innerHTML = summary;
-
-    if (chart) chart.destroy();
-    chart = new Chart(resultChartCtx, {
-      type: 'bar',
-      data: {
-        labels: results.map(r => r.code),
-        datasets: [{ label: 'Scores', data: results.map(r => r.score), backgroundColor: '#00aaff' }]
-      },
-      options: { scales: { y: { beginAtZero: true, max: 100 } }, responsive: true }
+      profileDiv.innerHTML = results.map((student, index) => {
+        const courses = StudentHelper.getRegisteredCourses(student.department, student.level, semester);
+        student.semester = semester;
+        student.courses = courses.length > 0 ? courses : (student.courses || []);
+        return `
+          <div style="margin: 15px 0; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+            <p><strong>${student.fullname}</strong> - ${student.matric}</p>
+            <button onclick='loadStudent(${JSON.stringify(student)})'>Select This Student</button>
+          </div>`;
+      }).join('');
     });
 
-    // 🔹 Submit to Backend (INSERTED HERE)
-    const resultPayload = {
-      matric_no: currentStudent.matric.toUpperCase(),
-      session: document.getElementById("session").value,
-      semester: currentStudent.semester,
-      results,
-      gpa,
-      cgpa,
-      name: currentStudent.fullname,
-      department: currentStudent.department,
-      level: currentStudent.level
-    };
+    function loadStudent(raw) {
+      const student = typeof raw === "string" ? JSON.parse(raw) : raw;
+      currentStudent = student;
+      document.getElementById('studentProfile').innerHTML = `
+        <p><strong>Name:</strong> ${student.fullname}</p>
+        <p><strong>Matric Number:</strong> ${student.matric}</p>
+        <p><strong>Department:</strong> ${student.department}</p>
+        <p><strong>Level:</strong> ${student.level}</p>
+        <p><strong>Semester:</strong> ${student.semester}</p>
+      `;
+      populateCourseTable(student.courses);
+      alert(`${student.fullname} loaded.`);
+    }
 
-    try {
-      const response = await fetch("http://127.0.0.1:5000/api/result/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(resultPayload)
+    function populateCourseTable(courses) {
+      const tbody = document.querySelector('#courseTable tbody');
+      tbody.innerHTML = '';
+      courses.forEach(course => {
+        const row = document.createElement('tr');
+        row.classList.add("course-row");
+        row.innerHTML = `
+          <td class="code">${course.code}</td>
+          <td class="title">${course.title}</td>
+          <td class="unit">${course.unit || 3}</td>
+          <td><input class="score" type="number" required /></td>
+          <td class="grade"></td>
+          <td class="gradePoint"></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    document.getElementById('scoreForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const rows = document.querySelectorAll(".course-row");
+      const results = [];
+      let totalPoints = 0, totalUnits = 0;
+
+      for (const row of rows) {
+        const score = parseInt(row.querySelector(".score").value);
+        if (isNaN(score) || score < 0 || score > 99) {
+          alert("Enter a score between 0-99.");
+          row.querySelector(".score").focus();
+          return;
+        }
+        const code = row.querySelector(".code").textContent;
+        const title = row.querySelector(".title").textContent;
+        const unit = parseInt(row.querySelector(".unit").textContent);
+        const grade = getGrade(score);
+        const gradePoint = getGradePoint(grade);
+        row.querySelector(".grade").textContent = grade;
+        row.querySelector(".gradePoint").textContent = gradePoint;
+
+        totalPoints += gradePoint * unit;
+        totalUnits += unit;
+        results.push({ code, title, score, grade, gradePoint, unit });
+      }
+
+      const gpa = (totalPoints / totalUnits).toFixed(2);
+      let cgpa = gpa;
+      if (parseInt(currentStudent.level) > 100 && currentStudent.cgpa)
+        cgpa = ((parseFloat(currentStudent.cgpa) + parseFloat(gpa)) / 2).toFixed(2);
+
+      document.getElementById('resultSummary').innerHTML =
+        `<p><strong>Total Units:</strong> ${totalUnits}</p><p><strong>GPA:</strong> ${gpa}</p><p><strong>CGPA:</strong> ${cgpa}</p>`;
+
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: results.map(r => r.code),
+          datasets: [{ label: 'Scores', data: results.map(r => r.score), backgroundColor: '#00aaff' }]
+        },
+        options: { scales: { y: { beginAtZero: true, max: 100 } }, responsive: true }
       });
 
-      if (response.ok) {
-        alert(" Result saved to backend successfully!");
-      } else {
-        alert(" Failed to save result to backend.");
+      const resultPayload = {
+        matric_no: currentStudent.matric.toUpperCase(),
+        session: document.getElementById("session").value,
+        semester: currentStudent.semester,
+        results,
+        gpa,
+        cgpa,
+        name: currentStudent.fullname,
+        department: currentStudent.department,
+        level: currentStudent.level
+      };
+
+      try {
+        const response = await fetch(`${baseURL}/api/result/save`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(resultPayload)
+        });
+        alert(response.ok ? "Saved successfully!" : "Failed to save.");
+      } catch (error) {
+        console.error(error);
+        alert("Backend error.");
       }
-    } catch (error) {
-      console.error(error);
-      alert(" Error connecting to backend.");
+    });
+
+    function getGrade(score) {
+      if (score >= 70) return "A";
+      if (score >= 60) return "B";
+      if (score >= 50) return "C";
+      if (score >= 45) return "D";
+      if (score >= 40) return "E";
+      return "F";
     }
-  });
 
-  function getGrade(score) {
-    if (score >= 70) return "A";
-    if (score >= 60) return "B";
-    if (score >= 50) return "C";
-    if (score >= 45) return "D";
-    if (score >= 40) return "E";
-    return "F";
-  }
+    function getGradePoint(grade) {
+      const map = { A: 5, B: 4, C: 3, D: 2, E: 1, F: 0 };
+      return map[grade] || 0;
+    }
 
-  function getGradePoint(grade) {
-    const map = { A: 5, B: 4, C: 3, D: 2, E: 1, F: 0 };
-    return map[grade] || 0;
-  }
-</script>
-
+    function downloadExcel() {
+      const rows = document.querySelectorAll(".course-row");
+      const data = [["Course Code", "Course Title", "Score", "Grade", "Grade Point", "Unit"]];
+      rows.forEach(row => {
+        data.push([
+          row.querySelector(".code").textContent,
+          row.querySelector(".title").textContent,
+          row.querySelector(".score").value,
+          row.querySelector(".grade").textContent,
+          row.querySelector(".gradePoint").textContent,
+          row.querySelector(".unit").textContent
+        ]);
+      });
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
+      XLSX.writeFile(workbook, "Student_Results.xlsx");
+    }
+  </script>
 </body>
 </html>

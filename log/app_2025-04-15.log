@@ -1,0 +1,198 @@
+2025-04-15 15:06:46 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:06:46 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:06:46 - [INFO] -  * Restarting with stat
+2025-04-15 15:06:46 - [WARNING] -  * Debugger is active!
+2025-04-15 15:06:46 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:06:50 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:06:50] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-04-15 15:06:50 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:06:50] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:06:50 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:06:50] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-15 15:06:50 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:06:50] "GET /?__debugger__=yes&cmd=resource&f=console.png&s=rtHnZC4nGDwxQ7Nke1i0 HTTP/1.1" 200 -
+2025-04-15 15:06:52 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:06:52] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-04-15 15:10:16 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:10:16 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:10:16 - [INFO] -  * Restarting with stat
+2025-04-15 15:10:16 - [WARNING] -  * Debugger is active!
+2025-04-15 15:10:16 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "GET / HTTP/1.1" 200 -
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "[33mGET /Js/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "[33mGET /Css/style.css HTTP/1.1[0m" 404 -
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "[33mGET /Css/index.css HTTP/1.1[0m" 404 -
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "[33mGET /Js/student_helper.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "[33mGET /Js/index.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:19 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:19] "[33mGET /Js/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:21 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-15 15:10:24 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:24] "GET /login HTTP/1.1" 200 -
+2025-04-15 15:10:24 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:24] "[33mGET /Js/student_helper.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:24 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:24] "[33mGET /Js/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:24 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:24] "[33mGET /Design/login-bg.png HTTP/1.1[0m" 404 -
+2025-04-15 15:10:34 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:34] "GET /admin_login HTTP/1.1" 200 -
+2025-04-15 15:10:34 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:34] "[33mGET /Js/Backend/voice.js HTTP/1.1[0m" 404 -
+2025-04-15 15:10:34 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:10:34] "[33mGET /Design/ChatGPT%20Image%20Apr%209,%202025,%2002_52_07%20AM.png HTTP/1.1[0m" 404 -
+2025-04-15 15:16:56 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:16:56 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:16:56 - [INFO] -  * Restarting with stat
+2025-04-15 15:16:56 - [WARNING] -  * Debugger is active!
+2025-04-15 15:16:56 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:16:58 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:16:58] "GET / HTTP/1.1" 200 -
+2025-04-15 15:16:58 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:16:58] "[33mGET /Css/style.css HTTP/1.1[0m" 404 -
+2025-04-15 15:16:58 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:16:58] "[33mGET /Js/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-15 15:21:01 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:21:01 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:21:01 - [INFO] -  * Restarting with stat
+2025-04-15 15:21:01 - [WARNING] -  * Debugger is active!
+2025-04-15 15:21:01 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:21:04 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:21:04] "GET / HTTP/1.1" 200 -
+2025-04-15 15:21:04 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:21:04] "[33mGET /Js/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-15 15:21:04 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:21:04] "[33mGET /Css/style.css HTTP/1.1[0m" 404 -
+2025-04-15 15:21:17 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:21:17] "GET / HTTP/1.1" 200 -
+2025-04-15 15:21:17 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:21:17] "[33mGET /Js/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-15 15:21:17 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:21:17] "[33mGET /Css/style.css HTTP/1.1[0m" 404 -
+2025-04-15 15:27:32 - [INFO] -  * Detected change in 'c:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\Backend\\Py\\index.py', reloading
+2025-04-15 15:27:32 - [INFO] -  * Restarting with stat
+2025-04-15 15:27:33 - [WARNING] -  * Debugger is active!
+2025-04-15 15:27:33 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:27:48 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:27:48] "GET / HTTP/1.1" 200 -
+2025-04-15 15:27:49 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:27:49] "GET /Js/Voice_feature.js HTTP/1.1" 200 -
+2025-04-15 15:27:49 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:27:49] "GET /Css/style.css HTTP/1.1" 200 -
+2025-04-15 15:27:50 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:27:50] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 15:27:51 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:27:51] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 15:31:28 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:31:28 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:31:28 - [INFO] -  * Restarting with stat
+2025-04-15 15:31:28 - [WARNING] -  * Debugger is active!
+2025-04-15 15:31:28 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:31:31 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:31:31] "GET / HTTP/1.1" 200 -
+2025-04-15 15:31:32 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:31:32] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 15:31:32 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:31:32] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:31:33 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:31:33] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 15:31:33 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:31:33] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 15:33:29 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:33:29 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:33:29 - [INFO] -  * Restarting with stat
+2025-04-15 15:33:30 - [WARNING] -  * Debugger is active!
+2025-04-15 15:33:30 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:33:33 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:33:33] "GET / HTTP/1.1" 200 -
+2025-04-15 15:33:34 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:33:34] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 15:33:34 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:33:34] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:33:35 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:33:35] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 15:33:35 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:33:35] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 15:35:51 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:35:51 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:35:51 - [INFO] -  * Restarting with stat
+2025-04-15 15:35:51 - [WARNING] -  * Debugger is active!
+2025-04-15 15:35:51 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:35:54 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:35:54] "GET / HTTP/1.1" 200 -
+2025-04-15 15:35:54 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:35:54] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 15:35:54 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:35:54] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:35:56 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:35:56] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 15:35:56 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:35:56] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 15:37:59 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:37:59 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:37:59 - [INFO] -  * Restarting with stat
+2025-04-15 15:38:00 - [WARNING] -  * Debugger is active!
+2025-04-15 15:38:00 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:38:03 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:38:03] "GET / HTTP/1.1" 200 -
+2025-04-15 15:38:03 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:38:03] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 15:38:03 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:38:03] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:38:05 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:38:05] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 15:38:05 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:38:05] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 15:42:33 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:42:33 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:42:33 - [INFO] -  * Restarting with stat
+2025-04-15 15:42:33 - [WARNING] -  * Debugger is active!
+2025-04-15 15:42:33 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:42:38 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:42:38] "GET /Css/index.css HTTP/1.1" 200 -
+2025-04-15 15:46:02 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:46:02 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:46:02 - [INFO] -  * Restarting with stat
+2025-04-15 15:46:03 - [WARNING] -  * Debugger is active!
+2025-04-15 15:46:03 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:46:06 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:46:06] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-04-15 15:46:06 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:46:06] "[36mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:46:06 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:46:06] "[36mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-04-15 15:46:06 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:46:06] "GET /?__debugger__=yes&cmd=resource&f=console.png&s=9LKFBURf4zIkM2oiMOM1 HTTP/1.1" 200 -
+2025-04-15 15:46:08 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:46:08] "[36mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-04-15 15:48:51 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 15:48:51 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 15:48:51 - [INFO] -  * Restarting with stat
+2025-04-15 15:48:52 - [WARNING] -  * Debugger is active!
+2025-04-15 15:48:52 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 15:48:53 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:48:53] "GET / HTTP/1.1" 200 -
+2025-04-15 15:48:54 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:48:54] "[36mGET /Css/index.css HTTP/1.1[0m" 304 -
+2025-04-15 15:48:54 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:48:54] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 15:48:54 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:48:54] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 15:48:55 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:48:55] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 15:48:56 - [INFO] - 127.0.0.1 - - [15/Apr/2025 15:48:56] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 16:36:54 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 16:36:54 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 16:36:54 - [INFO] -  * Restarting with stat
+2025-04-15 16:36:55 - [WARNING] -  * Debugger is active!
+2025-04-15 16:36:55 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 16:36:58 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:36:58] "GET / HTTP/1.1" 200 -
+2025-04-15 16:37:11 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:11] "GET /login_home HTTP/1.1" 200 -
+2025-04-15 16:37:11 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:11] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 16:37:11 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:11] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 16:37:11 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:11] "[36mGET /Css/index.css HTTP/1.1[0m" 304 -
+2025-04-15 16:37:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:12] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 16:37:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:12] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 16:37:15 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:15] "GET /login HTTP/1.1" 200 -
+2025-04-15 16:37:15 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:15] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 16:37:15 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:15] "GET /Js/student_helper.js HTTP/1.1" 200 -
+2025-04-15 16:37:15 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:15] "[33mGET /Design/login-bg.png HTTP/1.1[0m" 404 -
+2025-04-15 16:37:16 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:16] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 16:37:16 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:37:16] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 16:38:52 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:38:52] "GET / HTTP/1.1" 200 -
+2025-04-15 16:39:01 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:39:01] "GET /welcome HTTP/1.1" 200 -
+2025-04-15 16:39:01 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:39:01] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 16:39:01 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:39:01] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 16:39:01 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:39:01] "[36mGET /Css/index.css HTTP/1.1[0m" 304 -
+2025-04-15 16:39:02 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:39:02] "[33mPOST /api/voice/speak HTTP/1.1[0m" 404 -
+2025-04-15 16:39:02 - [INFO] - 127.0.0.1 - - [15/Apr/2025 16:39:02] "[33mGET /api/voice/listen HTTP/1.1[0m" 404 -
+2025-04-15 17:01:51 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 17:01:51 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 17:01:51 - [INFO] -  * Restarting with stat
+2025-04-15 17:01:51 - [WARNING] -  * Debugger is active!
+2025-04-15 17:01:51 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 17:01:56 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:01:56] "GET / HTTP/1.1" 200 -
+2025-04-15 17:02:08 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:08] "GET /welcome HTTP/1.1" 200 -
+2025-04-15 17:02:08 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:08] "[36mGET /Css/style.css HTTP/1.1[0m" 304 -
+2025-04-15 17:02:08 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:08] "GET /Js/Voice_feature.js HTTP/1.1" 200 -
+2025-04-15 17:02:08 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:08] "[36mGET /Css/index.css HTTP/1.1[0m" 304 -
+2025-04-15 17:02:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:12] "GET /signup HTTP/1.1" 200 -
+2025-04-15 17:02:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:12] "[36mGET /Js/student_helper.js HTTP/1.1[0m" 304 -
+2025-04-15 17:02:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:12] "[33mGET /Js/one_time_thing.js HTTP/1.1[0m" 404 -
+2025-04-15 17:02:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:12] "[36mGET /Js/Voice_feature.js HTTP/1.1[0m" 304 -
+2025-04-15 17:02:12 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:12] "GET /Js/validation.js HTTP/1.1" 200 -
+2025-04-15 17:02:18 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:18] "[33mPOST /speak HTTP/1.1[0m" 404 -
+2025-04-15 17:02:22 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:22] "[33mPOST /speak HTTP/1.1[0m" 404 -
+2025-04-15 17:02:37 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:37] "[33mPOST /speak HTTP/1.1[0m" 404 -
+2025-04-15 17:02:41 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:41] "[33mPOST /speak HTTP/1.1[0m" 404 -
+2025-04-15 17:02:44 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:44] "[33mPOST /speak HTTP/1.1[0m" 404 -
+2025-04-15 17:02:48 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:02:48] "[33mPOST /speak HTTP/1.1[0m" 404 -
+2025-04-15 17:27:06 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 17:27:06 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 17:27:06 - [INFO] -  * Restarting with stat
+2025-04-15 17:27:07 - [WARNING] -  * Debugger is active!
+2025-04-15 17:27:07 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-15 17:27:10 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:27:10] "GET / HTTP/1.1" 200 -
+2025-04-15 17:27:37 - [INFO] - 127.0.0.1 - - [15/Apr/2025 17:27:37] "GET / HTTP/1.1" 200 -
+2025-04-15 17:29:37 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-15 17:29:37 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-15 17:29:37 - [INFO] -  * Restarting with stat
+2025-04-15 17:29:37 - [WARNING] -  * Debugger is active!
+2025-04-15 17:29:37 - [INFO] -  * Debugger PIN: 275-989-408

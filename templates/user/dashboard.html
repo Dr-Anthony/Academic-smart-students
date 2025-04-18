@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Dashboard</title>
   <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
-  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>  
+  <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -189,7 +190,6 @@
       <h3>Student Menu</h3>
       <a href="{{ url_for('dashboard') }}">Dashboard</a>
       <a href="{{ url_for('profile') }}">Profile</a>
-  
       <div class="dropdown">
         <button class="dropbtn">Academics</button>
         <div class="dropdown-content">
@@ -198,12 +198,10 @@
         </div>
       </div>
     </div>
-  
     <div class="logout">
       <a href="{{ url_for('login') }}">Logout</a>
     </div>
   </div>
-  
 
   <div class="profile-pic">
     <img src="https://via.placeholder.com/60" id="dashboardProfilePic" alt="Profile Picture">
@@ -215,7 +213,7 @@
     </div>
 
     <div class="notice-board">
-      <h2> Notice Board</h2>
+      <h2>Notice Board</h2>
       <div id="notices">
         <p>Loading notices...</p>
       </div>
@@ -223,25 +221,27 @@
   </div>
 
   <script>
-    const user = JSON.parse(localStorage.getItem("user") || "{}") || {};
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
     if (!user || !user.matric) {
       alert("Access denied. Please login first.");
-      window.location.href = "login.html";
+      window.location.href = "{{ url_for('login') }}";
     }
-    if (user && user.fullname && user.department) {
+
+    if (user.fullname && user.department) {
       document.getElementById("greeting").innerText =
         `Welcome, ${user.fullname} from ${user.department.toUpperCase()} Department!`;
     }
-  
-    if (user && user.profilePic) {
+
+    if (user.profilePic) {
       document.getElementById("dashboardProfilePic").src = user.profilePic;
     }
-  
+
     function markAsRead(index) {
       localStorage.setItem(`notice_read_${index}`, 'true');
       alert(`Notice ${index + 1} marked as read.`);
     }
-  
+
     function submitReply(index) {
       const input = document.getElementById(`reply-${index}`);
       const reply = input.value.trim();
@@ -252,9 +252,9 @@
       alert(`Your reply: "${reply}" has been sent.`);
       input.value = '';
     }
-  
-    // Fetch department-specific notices from backend
-    fetch(`http://127.0.0.1:5000/api/notice/get?department=${user.department}`)
+
+    const baseURL = window.location.origin;
+    fetch(`${baseURL}/api/notice/get?department=${user.department}`)
       .then(res => res.json())
       .then(data => {
         const container = document.getElementById("notices");
@@ -263,19 +263,19 @@
           data.forEach((notice, index) => {
             const div = document.createElement("div");
             div.className = "notice-item";
-  
+
             if (localStorage.getItem(`notice_read_${index}`)) {
               div.style.opacity = 0.6;
             }
-  
+
             div.innerHTML = `
               <strong>${index + 1}. ${notice.title}</strong><br>
               <p>${notice.body}</p>
-              ${notice.attachment ? `<p> Attachment: <a href="../../uploads/${notice.attachment}" target="_blank">${notice.attachment}</a></p>` : ''}
+              ${notice.attachment ? `<p>Attachment: <a href="../../uploads/${notice.attachment}" target="_blank">${notice.attachment}</a></p>` : ''}
               <button onclick="markAsRead(${index})">Mark as Read</button>
               <div>
                 <input type="text" id="reply-${index}" placeholder="Reply (optional)">
-                <button onclick="submitReply(${index})"> Send</button>
+                <button onclick="submitReply(${index})">Send</button>
               </div>
             `;
             container.appendChild(div);
@@ -283,9 +283,11 @@
         } else {
           container.innerHTML = '<p>No notices available for your department.</p>';
         }
+      })
+      .catch(err => {
+        document.getElementById("notices").innerHTML = '<p>Error loading notices.</p>';
+        console.error("Error fetching notices:", err);
       });
   </script>
-  
-  
 </body>
 </html>

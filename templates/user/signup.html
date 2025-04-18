@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Student Signup</title>
   <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
-  <script src="{{ url_for('serve_js', filename='one_time_thing.js') }}"></script>
   <script src="{{ url_for('serve_js', filename='validation.js') }}"></script>
   <script src="{{ url_for('serve_js', filename='Voice_feature.js') }}"></script>  
   <style>
@@ -87,30 +86,33 @@
 
   <div class="container">
     <h2>Student Signup</h2>
-    <form id="signupForm">
+    <form id="signupForm" method="POST" onsubmit="return validateForm()">
       <input type="text" name="first_name" placeholder="First Name" required>
       <input type="text" name="middle_name" placeholder="Middle Name">
       <input type="text" name="last_name" placeholder="Last Name" required>
       <input type="email" name="email" placeholder="Email" required>
-      <input type="text" name="phone" placeholder="Phone Number" required>
-
+      <input type="tel" name="phone" placeholder="Phone Number" required>
       <button type="submit">Sign Up</button>
     </form>
   </div>
 
   <script>
-    
-  function isDuplicateSignup(email, phone) {
-    return false; // Temporarily assume no duplicates
-  }
+    const baseURL = window.location.origin;
 
-  function saveStudentData(data) {
-    console.log("Student data saved!", data); // Temporary stub
-  }
+    function isDuplicateSignup(email, phone) {
+      const all = JSON.parse(localStorage.getItem("students") || "[]");
+      return all.some(std => std.email === email || std.phone === phone);
+    }
+
+    function saveStudentData(data) {
+      const all = JSON.parse(localStorage.getItem("students") || "[]");
+      all.push(data);
+      localStorage.setItem("students", JSON.stringify(all));
+    }
 
     document.getElementById("signupForm").addEventListener("submit", async function(e) {
       e.preventDefault();
-  
+
       const form = e.target;
       const data = {
         first_name: form.first_name.value.trim(),
@@ -119,30 +121,29 @@
         email: form.email.value.trim(),
         phone: form.phone.value.trim()
       };
-  
+
       if (!data.first_name || !data.last_name || !data.email || !data.phone) {
         alert("Invalid input! Please fill all required fields.");
         return;
       }
-  
+
       if (isDuplicateSignup(data.email, data.phone)) {
         alert("Warning: Duplicate signup detected (email or phone already exists)!");
         return;
       }
-  
+
       try {
-        const response = await fetch("/api/student/register", {
+        const response = await fetch(`${baseURL}/api/student/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
-  
+
         if (response.ok) {
           saveStudentData(data);
           localStorage.setItem("signupData", JSON.stringify(data));
           alert("Signup successful! Proceeding to profile update.");
           window.location.href = "{{ url_for('profile_update') }}";
-
         } else {
           alert("Signup failed!");
         }

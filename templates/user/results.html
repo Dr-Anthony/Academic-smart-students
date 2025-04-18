@@ -15,6 +15,7 @@
       padding: 40px;
       margin: 0;
     }
+
     .container {
       max-width: 1000px;
       margin: auto;
@@ -22,19 +23,12 @@
       padding: 30px;
       border-radius: 12px;
     }
+
     h2, h3 {
       text-align: center;
       margin-bottom: 20px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background-color: #fff;
-      color: #000;
-      border-radius: 8px;
-      overflow: hidden;
-    }
+
     .back-link {
       display: inline-block;
       margin: 20px;
@@ -46,6 +40,69 @@
       border-radius: 8px;
       transition: background-color 0.3s;
     }
+
+    .back-link:hover {
+      background-color: rgb(214, 124, 7);
+    }
+
+    #filters {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      color: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #007f00;
+      color: white;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      margin: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+    }
+
+    button.print { background-color: #007bff; }
+    button.export { background-color: #ffc107; color: #000; }
+
+    canvas {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 30px;
+    }
+
     #toast {
       visibility: hidden;
       min-width: 250px;
@@ -64,229 +121,183 @@
       opacity: 0;
       transition: opacity 0.5s ease, visibility 0.5s;
     }
+
     #toast.show-toast {
       visibility: visible;
       opacity: 1;
     }
-    
-    .back-link:hover {
-      background-color: rgb(214, 124, 7);
-    }
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border: 1px solid #ccc;
-    }
-    th {
-      background-color: #007f00;
-      color: white;
-    }
-    .actions {
-      text-align: center;
-      margin-top: 30px;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      margin: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      color: white;
-    }
-    button.print { background-color: #007bff; }
-    button.export { background-color: #ffc107; color: #000; }
-    select {
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: none;
-    }
-    #filters {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    canvas {
-      background: #fff;
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 30px;
-    }
   </style>
 </head>
 <body>
-
   <a href="{{ url_for('dashboard') }}" class="back-link">&larr; Back</a>
+  <div class="container">
+    <h2>🎓 Student Result Viewer</h2>
 
+    <div id="filters">
+      <select id="sessionFilter">
+        <option value="">-- Select Session --</option>
+        <option value="2024/2025">2024/2025</option>
+        <option value="2025/2026">2025/2026</option>
+      </select>
+      <select id="semesterFilter">
+        <option value="">-- Select Semester --</option>
+        <option value="first">First Semester</option>
+        <option value="second">Second Semester</option>
+      </select>
+      <button onclick="filterResults()">Apply Filter</button>
+    </div>
 
-<div class="container">
-  <h2>🎓 Student Result Viewer</h2>
+    <div id="toast">New result loaded successfully!</div>
+    <div id="studentInfo"></div>
+    <div id="resultTable"></div>
+    <canvas id="summaryChart" height="100"></canvas>
 
-  <div id="filters">
-    <select id="sessionFilter">
-      <option value="">-- Select Session --</option>
-      <option value="2024/2025">2024/2025</option>
-      <option value="2025/2026">2025/2026</option>
-    </select>
-    <select id="semesterFilter">
-      <option value="">-- Select Semester --</option>
-      <option value="first">First Semester</option>
-      <option value="second">Second Semester</option>
-    </select>
-    <button onclick="filterResults()">Apply Filter</button>
+    <div class="actions">
+      <button onclick="printResult()" class="print">Print / Save PDF</button>
+      <button onclick="exportCSV()" class="export">Export as CSV</button>
+    </div>
   </div>
 
-  <div id="toast"> New result loaded successfully!</div>
-  
-  <div id="studentInfo"></div>
-  <div id="resultTable"></div>
-  <canvas id="summaryChart" height="100"></canvas>
+  <script>
+    const baseURL = window.location.origin;
+    let resultData = {};
 
-  <div class="actions">
-    <button onclick="printResult()" class="print"> Print / Save PDF</button>
-    <button onclick="exportCSV()" class="export"> Export as CSV</button>
-  </div>
-</div>
+    async function fetchStudentData() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const selectedSemester = document.getElementById("semesterFilter").value;
+      const selectedSession = document.getElementById("sessionFilter").value;
 
-<script>
-  let resultData = {};
-
-  async function fetchStudentData() {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const selectedSemester = document.getElementById("semesterFilter").value;
-    const selectedSession = document.getElementById("sessionFilter").value;
-  
-    if (!user || !selectedSemester || !selectedSession) {
-      document.getElementById("resultTable").innerHTML = '<p style="color:red">Incomplete filter or user data.</p>';
-      return;
-    }
-  
-    const res = await fetch(`http://127.0.0.1:5000/api/result/get?matric_no=${user.matric}&semester=${selectedSemester}&session=${selectedSession}`);
-    const data = await res.json();
-  
-    if (!res.ok) {
-      document.getElementById("studentInfo").innerHTML = '<p style="color:red">No matching result found.</p>';
-      document.getElementById("resultTable").innerHTML = '';
-      return;
-    }
-  
-    resultData = data;
-    showResults(data);
-    drawChart(data);
-    exportCSV();
-    showToast();
-  }
-  
-  
-  
-
-  function showResults(data) {
-    document.getElementById("studentInfo").innerHTML = `
-      <h3>${data.name} (${data.matric_no})</h3>
-      <p><strong>Department:</strong> ${data.department}</p>
-      <p><strong>Level:</strong> ${data.level}</p>
-      <p><strong>Semester:</strong> ${data.semester.toUpperCase()}</p>
-    `;
-
-    let tableHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Course Code</th>
-            <th>Course Title</th>
-            <th>Score</th>
-            <th>Grade</th>
-            <th>Grade Point</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${data.results.map((r, i) => `
-            <tr>
-              <td>${i + 1}</td>
-              <td>${r.code}</td>
-              <td>${r.title}</td>
-              <td>${r.score}</td>
-              <td>${r.grade}</td>
-              <td>${r.gradePoint}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-      <h3>GPA: ${data.gpa}</h3>
-      ${(data.cgpa && data.semester === 'second') ? `<h3>CGPA: ${data.cgpa}</h3>` : ''}
-    `;
-
-    document.getElementById("resultTable").innerHTML = tableHTML;
-  }
-
-  function printResult() {
-    window.print();
-  }
-
-  function exportCSV() {
-    if (!resultData) return;
-    const rows = [
-      ["Name", "Matric No", "Department", "Level", "Semester", "GPA", "CGPA"],
-      [resultData.name, resultData.matric_no, resultData.department, resultData.level, resultData.semester, resultData.gpa, resultData.cgpa || ""]
-    ];
-    rows.push(["", "", "", "", "", "", ""]);
-    rows.push(["#", "Code", "Title", "Score", "Grade", "Point"]);
-    resultData.results.forEach((r, i) => {
-      rows.push([i + 1, r.code, r.title, r.score, r.grade, r.gradePoint]);
-    });
-
-    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `result_${resultData.matric_no}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  function filterResults() {
-    fetchStudentData();
-  }
-  
-
-  function drawChart(data) {
-    const ctx = document.getElementById('summaryChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: data.results.map(r => r.code),
-        datasets: [
-          {
-            label: 'Grade Points',
-            data: data.results.map(r => r.gradePoint),
-            backgroundColor: '#00c2ff'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          title: { display: true, text: 'Grade Point Summary' }
-        },
-        scales: {
-          y: { beginAtZero: true, stepSize: 1, max: 5 }
-        }
+      if (!user || !user.matric || !selectedSemester || !selectedSession) {
+        document.getElementById("resultTable").innerHTML = '<p style="color:red">Incomplete filter or user data.</p>';
+        return;
       }
-    });
-  }
 
-  window.onload = fetchStudentData;
-  function showToast() {
-    const toast = document.getElementById("toast");
-    toast.classList.add("show-toast");
-    setTimeout(() => {
-      toast.classList.remove("show-toast");
-    }, 2000);
-  }
-  
-</script>
+      try {
+        const res = await fetch(`${baseURL}/api/result/get?matric_no=${user.matric}&semester=${selectedSemester}&session=${selectedSession}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          document.getElementById("studentInfo").innerHTML = '<p style="color:red">No matching result found.</p>';
+          document.getElementById("resultTable").innerHTML = '';
+          return;
+        }
+
+        resultData = data;
+        showResults(data);
+        drawChart(data);
+        exportCSV();
+        showToast();
+      } catch (err) {
+        console.error("Fetch error:", err);
+        alert("Failed to load result. Please try again.");
+      }
+    }
+
+    function showResults(data) {
+      document.getElementById("studentInfo").innerHTML = `
+        <h3>${data.name} (${data.matric_no})</h3>
+        <p><strong>Department:</strong> ${data.department}</p>
+        <p><strong>Level:</strong> ${data.level}</p>
+        <p><strong>Semester:</strong> ${data.semester.toUpperCase()}</p>
+      `;
+
+      let tableHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Course Code</th>
+              <th>Course Title</th>
+              <th>Score</th>
+              <th>Grade</th>
+              <th>Grade Point</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.results.map((r, i) => `
+              <tr>
+                <td>${i + 1}</td>
+                <td>${r.code}</td>
+                <td>${r.title}</td>
+                <td>${r.score}</td>
+                <td>${r.grade}</td>
+                <td>${r.gradePoint}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        <h3>GPA: ${data.gpa}</h3>
+        ${(data.cgpa && data.semester === 'second') ? `<h3>CGPA: ${data.cgpa}</h3>` : ''}
+      `;
+
+      document.getElementById("resultTable").innerHTML = tableHTML;
+    }
+
+    function printResult() {
+      window.print();
+    }
+
+    function exportCSV() {
+      if (!resultData) return;
+      const rows = [
+        ["Name", "Matric No", "Department", "Level", "Semester", "GPA", "CGPA"],
+        [resultData.name, resultData.matric_no, resultData.department, resultData.level, resultData.semester, resultData.gpa, resultData.cgpa || ""]
+      ];
+      rows.push(["", "", "", "", "", "", ""]);
+      rows.push(["#", "Code", "Title", "Score", "Grade", "Point"]);
+      resultData.results.forEach((r, i) => {
+        rows.push([i + 1, r.code, r.title, r.score, r.grade, r.gradePoint]);
+      });
+
+      let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `result_${resultData.matric_no}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function filterResults() {
+      fetchStudentData();
+    }
+
+    function drawChart(data) {
+      const ctx = document.getElementById('summaryChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.results.map(r => r.code),
+          datasets: [
+            {
+              label: 'Grade Points',
+              data: data.results.map(r => r.gradePoint),
+              backgroundColor: '#00c2ff'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Grade Point Summary' }
+          },
+          scales: {
+            y: { beginAtZero: true, stepSize: 1, max: 5 }
+          }
+        }
+      });
+    }
+
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show-toast");
+      setTimeout(() => {
+        toast.classList.remove("show-toast");
+      }, 2000);
+    }
+
+    window.onload = fetchStudentData;
+  </script>
 </body>
 </html>

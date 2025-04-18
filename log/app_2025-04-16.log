@@ -1,0 +1,142 @@
+2025-04-16 14:09:20 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-16 14:09:20 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:09:20 - [INFO] -  * Restarting with stat
+2025-04-16 14:09:21 - [WARNING] -  * Debugger is active!
+2025-04-16 14:09:21 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:09:25 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:09:25] "GET / HTTP/1.1" 200 -
+2025-04-16 14:09:27 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:09:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-16 14:09:30 - [INFO] - Could not import comtypes.gen, trying to create it.
+2025-04-16 14:09:30 - [INFO] - Could not import comtypes.gen, trying to create it.
+2025-04-16 14:09:30 - [INFO] - Writing __init__.py file: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen\__init__.py'
+2025-04-16 14:09:30 - [INFO] - Created comtypes.gen directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:09:30 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:09:30 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:09:30 - [INFO] - Could not import comtypes.gen._C866CA3A_32F7_11D2_9602_00C04F8EE628_0_5_4: No module named 'comtypes.gen._C866CA3A_32F7_11D2_9602_00C04F8EE628_0_5_4'
+2025-04-16 14:09:30 - [INFO] - Could not import comtypes.gen._C866CA3A_32F7_11D2_9602_00C04F8EE628_0_5_4: No module named 'comtypes.gen._C866CA3A_32F7_11D2_9602_00C04F8EE628_0_5_4'
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen._C866CA3A_32F7_11D2_9602_00C04F8EE628_0_5_4
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen._C866CA3A_32F7_11D2_9602_00C04F8EE628_0_5_4
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen.SpeechLib
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen.SpeechLib
+2025-04-16 14:09:30 - [INFO] - Could not import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0: No module named 'comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0'
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
+2025-04-16 14:09:30 - [INFO] - Could not import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0: No module named 'comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0'
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen.stdole
+2025-04-16 14:09:30 - [INFO] - # Generating comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
+2025-04-16 14:09:31 - [INFO] - # Generating comtypes.gen.stdole
+2025-04-16 14:09:54 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:09:54] "GET / HTTP/1.1" 200 -
+2025-04-16 14:28:35 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-16 14:28:35 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:28:35 - [INFO] -  * Restarting with stat
+2025-04-16 14:28:36 - [WARNING] -  * Debugger is active!
+2025-04-16 14:28:36 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:29:48 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:29:48] "GET / HTTP/1.1" 200 -
+2025-04-16 14:33:59 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-16 14:33:59 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:33:59 - [INFO] -  * Restarting with stat
+2025-04-16 14:34:00 - [WARNING] -  * Debugger is active!
+2025-04-16 14:34:00 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:36:48 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-16 14:36:48 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:36:48 - [INFO] -  * Restarting with stat
+2025-04-16 14:36:49 - [WARNING] -  * Debugger is active!
+2025-04-16 14:36:49 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:38:12 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 14:38:12 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:38:12 - [INFO] -  * Restarting with stat
+2025-04-16 14:38:12 - [WARNING] -  * Debugger is active!
+2025-04-16 14:38:12 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:46:47 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 14:46:47 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:46:47 - [INFO] -  * Restarting with stat
+2025-04-16 14:46:47 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 14:46:47 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:46:48 - [WARNING] -  * Debugger is active!
+2025-04-16 14:46:48 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:46:48 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 14:46:48 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:48:57 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 14:48:57 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:48:57 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 14:48:57 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:48:57 - [INFO] -  * Restarting with stat
+2025-04-16 14:48:57 - [WARNING] -  * Debugger is active!
+2025-04-16 14:48:57 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:48:57 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 14:48:57 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:49:04 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:49:04] "GET / HTTP/1.1" 200 -
+2025-04-16 14:49:04 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:49:04] "GET / HTTP/1.1" 200 -
+2025-04-16 14:49:06 - [INFO] - 127.0.0.1 - - [16/Apr/2025 14:49:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-16 14:58:31 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 14:58:31 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 14:58:31 - [INFO] -  * Restarting with stat
+2025-04-16 14:58:31 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 14:58:31 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 14:58:32 - [WARNING] -  * Debugger is active!
+2025-04-16 14:58:32 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 14:58:32 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 14:58:32 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:00:14 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 15:00:14 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 15:00:14 - [INFO] -  * Restarting with stat
+2025-04-16 15:00:14 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:00:14 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:00:15 - [WARNING] -  * Debugger is active!
+2025-04-16 15:00:15 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 15:00:15 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:00:15 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:00:18 - [INFO] - 127.0.0.1 - - [16/Apr/2025 15:00:18] "GET / HTTP/1.1" 200 -
+2025-04-16 15:05:58 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 15:05:58 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 15:05:58 - [INFO] -  * Restarting with stat
+2025-04-16 15:05:58 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:05:58 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:05:59 - [WARNING] -  * Debugger is active!
+2025-04-16 15:05:59 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 15:05:59 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:05:59 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:10:41 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 15:10:41 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 15:10:41 - [INFO] -  * Restarting with stat
+2025-04-16 15:10:42 - [WARNING] -  * Debugger is active!
+2025-04-16 15:10:42 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 15:10:46 - [INFO] - 127.0.0.1 - - [16/Apr/2025 15:10:46] "GET / HTTP/1.1" 200 -
+2025-04-16 15:10:52 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:10:52 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:18:41 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.162:5050
+2025-04-16 15:18:41 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-16 15:18:41 - [INFO] -  * Restarting with stat
+2025-04-16 15:18:42 - [WARNING] -  * Debugger is active!
+2025-04-16 15:18:42 - [INFO] -  * Debugger PIN: 837-565-354
+2025-04-16 15:18:45 - [INFO] - 127.0.0.1 - - [16/Apr/2025 15:18:45] "GET / HTTP/1.1" 200 -
+2025-04-16 15:18:51 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:18:51 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'
+2025-04-16 15:18:51 - [INFO] - Imported existing <module 'comtypes.gen' from 'C:\\Users\\OKOYE ANTHONY C\\Documents\\Website for the Blind0\\venv\\lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-16 15:18:51 - [INFO] - Using writeable comtypes cache directory: 'C:\Users\OKOYE ANTHONY C\Documents\Website for the Blind0\venv\lib\site-packages\comtypes\gen'

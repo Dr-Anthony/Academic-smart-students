@@ -1,0 +1,150 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    animation: stars 100s linear infinite;
+    opacity: 0.1;
+    z-index: 0;
+  }
+
+  h1.title {
+    font-size: 2.7rem;
+    color: white;
+    text-align: center;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    animation: fadeInDown 1s ease forwards;
+    z-index: 1;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 80px;
+    z-index: 1;
+  }
+
+  .welcome-box {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(18px);
+    border-radius: 30px;
+    padding: 60px 40px;
+    width: 380px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    animation: floatIn 1.2s ease forwards;
+    position: relative;
+  }
+
+  .welcome-box:hover {
+    transform: scale(1.06) rotateZ(1deg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .welcome-box::after {
+    content: "";
+    position: absolute;
+    top: -5px; left: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffff, #ffcc00, #ff00cc);
+    background-size: 300% 300%;
+    z-index: -1;
+    animation: glow 6s ease infinite;
+    filter: blur(20px);
+    opacity: 0.3;
+  }
+
+  .welcome-box label {
+    font-weight: bold;
+    font-size: 15px;
+    color: #fff;
+    background-color: rgba(0,0,0,0.2);
+    padding: 6px 14px;
+    border-radius: 25px;
+    display: inline-block;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+  }
+
+  .welcome-box h2 {
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .welcome-box p {
+    font-size: 15px;
+    color: #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  .welcome-box a {
+    display: inline-block;
+    margin: 8px 6px;
+    padding: 12px 24px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    background: linear-gradient(135deg, #f12711, #f5af19);
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.5s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .welcome-box a:hover {
+    transform: scale(1.05) translateY(-2px);
+    background: linear-gradient(135deg, #f5af19, #f12711);
+  }
+
+  @keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes floatIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes glow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes stars {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      gap: 40px;
+    }
+  }

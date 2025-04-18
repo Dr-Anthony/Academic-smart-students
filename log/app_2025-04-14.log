@@ -1,0 +1,14 @@
+2025-04-14 18:57:53 - [INFO] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-14 18:57:53 - [INFO] - [33mPress CTRL+C to quit[0m
+2025-04-14 18:57:53 - [INFO] -  * Restarting with stat
+2025-04-14 18:57:53 - [WARNING] -  * Debugger is active!
+2025-04-14 18:57:53 - [INFO] -  * Debugger PIN: 275-989-408
+2025-04-14 18:57:56 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:57:56] "GET / HTTP/1.1" 200 -
+2025-04-14 18:57:56 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:57:56] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2025-04-14 18:57:56 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:57:56] "[33mGET /Backend/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-14 18:57:56 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:57:56] "[33mGET /Backend/student_helper.js HTTP/1.1[0m" 404 -
+2025-04-14 18:57:56 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:57:56] "[33mGET /Backend/Voice_feature.js HTTP/1.1[0m" 404 -
+2025-04-14 18:58:00 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:58:00] "GET /admin_signup HTTP/1.1" 200 -
+2025-04-14 18:58:00 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:58:00] "[33mGET /Backend/validation.js HTTP/1.1[0m" 404 -
+2025-04-14 18:58:00 - [INFO] - 127.0.0.1 - - [14/Apr/2025 18:58:00] "[33mGET /Design/ChatGPT%20Image%20Apr%2010,%202025,%2006_36_15%20AM.png HTTP/1.1[0m" 404 -

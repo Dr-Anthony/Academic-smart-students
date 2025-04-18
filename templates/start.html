@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Academy - Start</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in forwards;
+      opacity: 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      animation: fadeIn 2s ease-in forwards;
+      opacity: 0;
+      animation-delay: 1s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title" class="pulse">Welcome to Smart Academy</h1>
+  <p id="instruction">Say something like "I'm a new user" or "I have an account"</p>
+
+  <script>
+    window.onload = function () {
+      if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        alert("Sorry, your browser doesn't support speech recognition.");
+        return;
+      }
+
+      const synth = window.speechSynthesis;
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      const speak = (msg, callback) => {
+        const utter = new SpeechSynthesisUtterance(msg);
+        utter.lang = "en-GB";
+        utter.pitch = 1.1;
+        utter.rate = 0.95;
+        utter.onend = () => {
+          if (callback) callback();
+        };
+        synth.speak(utter);
+      };
+
+      const askAgain = () => {
+        speak("Are you a new user or an existing one?", () => {
+          setTimeout(() => {
+            recognition.start();
+          }, 300);
+        });
+      };
+
+      speak("Welcome to Smart Academy.", () => {
+        askAgain();
+      });
+
+      recognition.onstart = () => {
+        console.log("Voice recognition started.");
+      };
+
+      recognition.onaudiostart = () => {
+        console.log("Audio capturing started.");
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        console.log("Heard:", transcript);
+
+        if (transcript.includes("new") || transcript.includes("i am new") || transcript.includes("i’m new") || transcript.includes("first time")) {
+          speak("Redirecting you to the welcome page.");
+          setTimeout(() => {
+            window.location.href = "/welcome";
+          }, 3000);
+        } else if (transcript.includes("old") || transcript.includes("existing") || transcript.includes("have an account") || transcript.includes("i’m back")) {
+          speak("Redirecting you to the login page.");
+          setTimeout(() => {
+            window.location.href = "/login_home";
+          }, 3000);
+        } else {
+          speak("Sorry, I didn’t catch that. Please say if you are a new or existing user.", () => {
+            setTimeout(() => {
+              recognition.start();
+            }, 300);
+          });
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        speak("There was an error. Please try again.", () => {
+          setTimeout(() => {
+            recognition.start();
+          }, 300);
+        });
+      };
+
+      recognition.onend = () => {
+        if (!synth.speaking) {
+          askAgain();
+        }
+      };
+    };
+  </script>
+</body>
+</html>

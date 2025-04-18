@@ -34,6 +34,7 @@
       border-radius: 8px;
       transition: background-color 0.3s;
     }
+
     .back-link:hover {
       background-color: rgb(214, 124, 7);
     }
@@ -160,7 +161,10 @@
   <script>
     const user = JSON.parse(localStorage.getItem("user"));
 
-    if (user) {
+    if (!user || !user.matric) {
+      alert("No valid user found. Please log in again.");
+      window.location.href = "{{ url_for('login') }}";
+    } else {
       const fields = [
         'fullname', 'dob', 'gender', 'nationality', 'state',
         'department', 'level', 'father_name', 'father_phone',
@@ -172,8 +176,6 @@
       });
 
       document.getElementById("profilePic").src = user.profilePic || "https://via.placeholder.com/130";
-    } else {
-      alert("No profile data found in localStorage.");
     }
   </script>
 

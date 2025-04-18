@@ -110,43 +110,42 @@
       <button type="submit">Login</button>
     </form>
 
-  <div class="link">
-    Don't have an account? <a href="{{ url_for('signup') }}">Apply</a>
-  </div>
-
+    <div class="link">
+      Don't have an account? <a href="{{ url_for('signup') }}">Apply</a>
+    </div>
   </div>
 
   <script>
+    const baseURL = window.location.origin;
+
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
       e.preventDefault();
-    
+
       const inputMatric = document.getElementById("matric").value.trim().toUpperCase();
       const inputPassword = document.getElementById("password").value;
-    
-      const res = await fetch("http://127.0.0.1:5000/api/login/student", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matric: inputMatric, password: inputPassword })
-      });
-    
-      const data = await res.json();
-    
-      if (res.ok) {
-        localStorage.setItem("user", JSON.stringify(data));
-        alert("Login successful!");
-        window.location.href = "{{ url_for('dashboard') }}";
 
-      } else {
-        alert(data.error || "Login failed.");
+      try {
+        const res = await fetch(`${baseURL}/api/login/student`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ matric: inputMatric, password: inputPassword })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem("user", JSON.stringify(data));
+          alert("Login successful!");
+          window.location.href = "{{ url_for('dashboard') }}";
+        } else {
+          alert(data.error || "Login failed.");
+        }
+      } catch (error) {
+        console.error("Error during login:", error);
+        alert("Something went wrong. Please try again.");
       }
     });
-    
   </script>
-  
 
 </body>
 </html>
-
-
-
-

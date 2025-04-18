@@ -1,4 +1,5 @@
-from Backend.index import app
+from listen import listen_to_command
+from index import app
 from flask import jsonify, send_from_directory
 import datetime, os, logging
 
@@ -21,26 +22,15 @@ app.config['ENV'] = os.getenv('FLASK_ENV', 'production')
 app.config['DEBUG'] = app.config['ENV'] == 'development'
 
 # Routes
-@app.route("/")
-def welcome():
-    logging.info("Homepage accessed.")
-    return """
-    <html>
-    <head>
-        <title>Voice Portal</title>
-        <style>
-            body { font-family: Arial, sans-serif; text-align: center; margin-top: 10%; }
-            a { text-decoration: none; color: #007bff; }
-            a:hover { text-decoration: underline; }
-        </style>
-    </head>
-    <body>
-        <h1>Voice Interactive Portal</h1>
-        <p>The platform is operational.</p>
-        <a href='/status'>Check API Status</a>
-    </body>
-    </html>
-    """
+
+# Add the /listen route directly (for frontend JS)
+@app.route("/listen", methods=["POST"])
+def listen_route():
+    return listen_to_command()
+
+@app.route('/')
+def home():
+    return "Voice Portal is active"
 
 @app.route("/status")
 def status():
@@ -57,3 +47,5 @@ def serve_backend_files(filename):
     logging.info(f"Serving Backend file: {filename}")
     backend_dir = os.path.join(os.getcwd(), 'Backend')
     return send_from_directory(backend_dir, filename)
+
+app.run(debug=True)

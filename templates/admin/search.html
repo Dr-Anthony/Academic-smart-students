@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Search Student</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Search User</title>
-  <script src="{{ url_for('serve_js', filename='student_helper.js') }}"></script>
+
   <style>
     * {
       margin: 0;
@@ -13,8 +13,8 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, rgba(135, 170, 9, 0.808), rgba(108, 238, 210, 0.6)), url('../../Design/ChatGPT%20Image%20Apr%209,%202025,%2002_49_41%20PM.png');
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, rgba(135, 170, 9, 0.8), rgba(108, 238, 210, 0.6)), url('../../Design/ChatGPT%20Image%20Apr%209,%202025,%2002_49_41%20PM.png');
       background-size: cover;
       background-position: center;
       color: #fff;
@@ -24,6 +24,7 @@
       justify-content: center;
       flex-direction: column;
       position: relative;
+      padding: 20px;
     }
 
     .back-link {
@@ -41,11 +42,11 @@
     }
 
     .container {
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);
       padding: 40px;
       border-radius: 16px;
-      width: 80%;
-      max-width: 600px;
+      width: 100%;
+      max-width: 650px;
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
       text-align: center;
     }
@@ -66,75 +67,68 @@
       color: #333;
     }
 
-    button {
-      padding: 15px 30px;
-      font-size: 1.1em;
-      background-color: #ff5722;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 10px;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      animation: bounce 2s infinite;
-    }
-
-    button:hover {
-      background-color: #e64a19;
-      transform: scale(1.05);
-    }
-
-    #actionButtons {
-      display: none;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
+    .result-box {
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 10px;
+      color: #000;
       margin-top: 20px;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    .result-box p {
+      margin: 8px 0;
+    }
+
+    .action-btns {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .action-btns a, button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .action-btns a:hover, button:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
 
-  <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back To Dashboard </a>
-
+  <a href="{{ url_for('admin_dashboard') }}" class="back-link">&larr; Back To Dashboard</a>
 
   <div class="container">
     <h2>Search Student</h2>
-    <form id="searchForm" class="search-form">
-      <input type="text" id="searchQuery" placeholder="Search for name, matric number, etc." required />
-      <button type="submit">Search</button>
-    </form>
+    <input type="text" id="searchInput" placeholder="Search by name, matric number, etc.">
 
-    <div id="actionButtons">
-      <button id="editBtn">Edit Student</button>
-      <a href="student_details.html?matric=AOC/CEN/23/0001">View Profile</a>
-    </div>
+    <div id="result" class="result-box" style="display:none;"></div>
   </div>
 
   <script>
-    const searchForm = document.getElementById("searchForm");
-    const searchInput = document.getElementById("searchQuery");
-    const actionButtons = document.getElementById("actionButtons");
-    const editBtn = document.getElementById("editBtn");
-    const viewBtn = document.getElementById("viewBtn");
-  
-    const searchResultsDiv = document.createElement("div");
-    searchResultsDiv.id = "searchResults";
-    searchResultsDiv.style.marginTop = "20px";
-    document.querySelector(".container").appendChild(searchResultsDiv);
-  
-    searchForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-  
+    const students = JSON.parse(localStorage.getItem("students") || "[]");
+    const searchInput = document.getElementById("searchInput");
+    const resultBox = document.getElementById("result");
+
+    searchInput.addEventListener("input", () => {
       const query = searchInput.value.trim().toLowerCase();
-      const allStudents = StudentHelper.getAllStudents();
-  
-      const results = allStudents.filter(student => {
+      if (!query) {
+        resultBox.innerHTML = "";
+        resultBox.style.display = "none";
+        return;
+      }
+
+      const results = students.filter(student => {
         const valuesToSearch = [
           student.first_name,
           student.last_name,
@@ -147,62 +141,34 @@
           student.level,
           student.year_of_entry
         ].map(val => val?.toLowerCase());
-  
+
         return valuesToSearch.some(val => val?.includes(query));
       });
-  
-      searchResultsDiv.innerHTML = "";
-  
+
       if (results.length > 0) {
-        actionButtons.style.display = "none";
-        results.forEach((student, index) => {
-          const studentCard = document.createElement("div");
-          studentCard.style.background = "#ffffffcc";
-          studentCard.style.color = "#000";
-          studentCard.style.padding = "15px";
-          studentCard.style.margin = "10px 0";
-          studentCard.style.borderRadius = "10px";
-          studentCard.style.cursor = "pointer";
-          studentCard.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
-          studentCard.textContent = `${student.fullname} | ${student.department} | Level ${student.level}`;
-  
-          studentCard.onclick = () => {
-            localStorage.setItem("user", JSON.stringify(student));
-            actionButtons.style.display = "flex";
-          };
-  
-          searchResultsDiv.appendChild(studentCard);
+        resultBox.innerHTML = "";
+        resultBox.style.display = "block";
+
+        results.forEach(student => {
+          resultBox.innerHTML += `
+            <div style="margin-bottom: 20px;">
+              <p><strong>Name:</strong> ${student.fullname}</p>
+              <p><strong>Department:</strong> ${student.department}</p>
+              <p><strong>Level:</strong> ${student.level}</p>
+              <div class="action-btns">
+                <a href="student_details.html?matric=${student.matric}">View Profile</a>
+                <a href="edit_students.html">Edit</a>
+              </div>
+            </div>
+          `;
         });
+
       } else {
-        actionButtons.style.display = "none";
-        const alertBox = document.createElement("div");
-        alertBox.textContent = "No matching student found!";
-        alertBox.style.position = "fixed";
-        alertBox.style.top = "20px";
-        alertBox.style.left = "50%";
-        alertBox.style.transform = "translateX(-50%)";
-        alertBox.style.background = "#ff4d4f";
-        alertBox.style.color = "#fff";
-        alertBox.style.padding = "12px 24px";
-        alertBox.style.borderRadius = "10px";
-        alertBox.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
-        alertBox.style.fontWeight = "bold";
-        alertBox.style.zIndex = 1000;
-        alertBox.style.opacity = "0";
-        alertBox.style.transition = "opacity 0.4s ease";
-        document.body.appendChild(alertBox);
-        setTimeout(() => alertBox.style.opacity = "1", 100);
-        setTimeout(() => {
-          alertBox.style.opacity = "0";
-          setTimeout(() => alertBox.remove(), 400);
-        }, 3000);
+        resultBox.style.display = "block";
+        resultBox.innerHTML = `<p style="color:red">No matching student found!</p>`;
       }
     });
-  
-    editBtn.onclick = () => window.location.href = "{{ url_for('edit_students') }}";
-    viewBtn.onclick = () => window.location.href = "{{ url_for('student_details') }}";
-
   </script>
-  
+
 </body>
 </html>
