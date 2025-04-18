@@ -6,3 +6,4 @@ python-dotenv==1.0.0
 werkzeug==2.2.3
 setuptools==65.5.1
 wheel==0.38.4
+openai
