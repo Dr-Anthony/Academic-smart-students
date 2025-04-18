@@ -15,18 +15,15 @@ WORKDIR /app
 # - Build tools for compiling C-based Python packages (like pyaudio)
 # Install audio and build dependencies
 RUN apt-get update && apt-get install -y \
-    # PyAudio and voice libraries
     portaudio19-dev \
     libasound2-dev \
     libportaudio2 \
     libportaudiocpp0 \
-    # Speech-to-text + text-to-speech processing
     ffmpeg \
-    libav-tools \
-    # Compilers for building pyaudio wheels
     build-essential \
-    espeak \
+    espeak-ng \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Copy your entire project into the container
 COPY . .
