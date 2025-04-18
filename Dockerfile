@@ -7,8 +7,10 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
+COPY Requirements.txt .  # Before the install line
+
 RUN pip install --upgrade pip && \
-    pip install flask gunicorn pyttsx3
+    pip install -r Requirements.txt
 
 EXPOSE 5000
 
