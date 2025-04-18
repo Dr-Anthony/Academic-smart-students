@@ -4,14 +4,15 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
-COPY . .
 
 # Install dependencies
-COPY Requirements.txt .  # Before the install line
+COPY . .
+
+COPY Requirements.txt .
 
 RUN pip install --upgrade pip && \
     pip install -r Requirements.txt
-
+    
 EXPOSE 5000
 
 # Run using gunicorn + your production-ready wsgi.py
