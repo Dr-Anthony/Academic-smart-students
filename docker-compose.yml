@@ -8,4 +8,4 @@ services:
       - .:/app
     environment:
       - FLASK_ENV=development
-    command: python Backend/Py/index.py
+    command: gunicorn Backend.Py.wsgi:app --bind 0.0.0.0:5000
