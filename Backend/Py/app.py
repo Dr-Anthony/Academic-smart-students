@@ -1,4 +1,3 @@
-from listen import listen_to_command
 from index import app
 from flask import jsonify, send_from_directory
 import datetime, os, logging
