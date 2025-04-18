@@ -8,7 +8,7 @@ COPY . .
 
 # Install dependencies
 RUN pip install --upgrade pip && \
-    pip install flask gunicorn
+    pip install flask gunicorn pyttsx3
 
 EXPOSE 5000
 
