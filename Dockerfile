@@ -11,4 +11,4 @@ RUN pip install --upgrade pip && \
 
 EXPOSE 5000
 
-CMD ["python", "Backend/index.py"]
+CMD ["python", "Backend/Py/index.py"]
